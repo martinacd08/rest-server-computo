@@ -1,19 +1,16 @@
 
 var express = require('express'),
-    app     = express(),
-    mysql   = require('mysql'),
-    connectionpool = mysql.createPool({
-        host     : '192.185.4.105',
-        user     : 'rigarcia_proyect',
-        password : 'proyecto',
-        database : 'rigarcia_proyecto'
-
-    });
+    app     = express();
 	
+var products = require('./BL/products.js');
 	
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
+
+app.get('/', products.getAll);
+
+/*
 app.get('/', function(req,res){
     connectionpool.getConnection(function(err, connection) {
         if (err) {
@@ -45,6 +42,8 @@ app.get('/', function(req,res){
         }
     });
 });
+*/
+
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));

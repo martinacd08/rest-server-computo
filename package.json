@@ -9,6 +9,10 @@
   "dependencies": {
     "express": "~4.9.x","mysql":"*"
   },
+  "files": [
+    "DAL/",
+	"BL/"
+  ],
   "engines": {
     "node": "0.12.2"
   },
