@@ -54,22 +54,15 @@ var products = {
   },
  
  getSaldoCorriente: function(req, res,next) {
-	connector.getSaldoCorriente(req.params.id,function(err, rows) {
+	connector.getSaldoCorrienteByFrac(req.params.id,function(err, rows) {
     res.json(rows);
   });
   },
-  update: function(req, res) {
-    var updateProduct = req.body;
-    var id = req.params.id;
-    data[id] = updateProduct // Spoof a DB call
-    res.json(updateProduct);
+  getExpedientesByFrac: function(req, res,next) {
+	connector.getExpedientesByFrac(req.params.id,function(err, rows) {
+    res.json(rows);
+  });
   },
- 
-  delete: function(req, res) {
-    var id = req.params.id;
-    data.splice(id, 1) // Spoof a DB call
-    res.json(true);
-  }
 };
 
 
