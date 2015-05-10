@@ -9,6 +9,20 @@ mysql   = require('mysql'),
     });
 
 
+module.exports.getAllFracs = function (id, cb) {
+  connectionpool.getConnection(function(err, conn) {
+    if (err){
+		
+       cb(err);
+	}
+    conn.query("select * from frac",
+               function(err, rows) {
+      conn.release();
+      cb(err, rows);
+    });
+  });
+};
+	
 module.exports.getFracByID = function (id, cb) {
   connectionpool.getConnection(function(err, conn) {
     if (err){
@@ -23,20 +37,6 @@ module.exports.getFracByID = function (id, cb) {
   });
 };
 
-module.exports.getAllFracs = function (id, cb) {
-  connectionpool.getConnection(function(err, conn) {
-    if (err){
-		
-       cb(err);
-	}
-    conn.query("select * from frac",
-               function(err, rows) {
-      conn.release();
-      cb(err, rows);
-    });
-  });
-};
-
 module.exports.getSaldoCorrienteByFrac = function (id, cb) {
   connectionpool.getConnection(function(err, conn) {
     if (err){
@@ -44,22 +44,6 @@ module.exports.getSaldoCorrienteByFrac = function (id, cb) {
        cb(err);
 	}
     conn.query('select  SUM(movimientos.SaldoMov) AS SaldoCorriente FROM movimientos where movimientos.CodFrac = '+id.toString()+' and  Cast(movimientos.FechaV as datetime) >= curdate();',
-               function(err, rows) {
-      conn.release();
-	  
-      cb(err, rows);
-    });
-  });
-};
-
-
-module.exports.getSaldoRecuperadoByFrac = function (id, cb) {
-  connectionpool.getConnection(function(err, conn) {
-    if (err){
-		
-       cb(err);
-	}
-    conn.query('select  SUM(Importe) AS SaldoRecuperado FROM movimientos where movimientos.CodFrac = '+id.toString()+' and  Cast(SaldoMov as decimal) = 0.0;',
                function(err, rows) {
       conn.release();
 	  
@@ -83,6 +67,20 @@ module.exports.getSaldoVencidoByFrac = function (id, cb) {
   });
 };
 
+module.exports.getSaldoRecuperadoByFrac = function (id, cb) {
+  connectionpool.getConnection(function(err, conn) {
+    if (err){
+		
+       cb(err);
+	}
+    conn.query('select  SUM(Importe) AS SaldoRecuperado FROM movimientos where movimientos.CodFrac = '+id.toString()+' and  Cast(SaldoMov as decimal) = 0.0;',
+               function(err, rows) {
+      conn.release();
+	  
+      cb(err, rows);
+    });
+  });
+};
 
 module.exports.getExpedientesByFrac = function (id, cb) {
   connectionpool.getConnection(function(err, conn) {
