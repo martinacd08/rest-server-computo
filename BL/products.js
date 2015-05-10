@@ -1,8 +1,10 @@
+var connectorDB = require('./connector.js');
+
 var products = {
  
   getAll: function(req, res) {
     var allProducts = data; // Spoof a DB call
-    res.json(allProducts);
+    res.json(connectorDB.getAll);
   },
  
   getOne: function(req, res) {
@@ -39,7 +41,7 @@ var data = [{
   id: '2'
 }, {
   name: 'product 3',
-  id: '3'
+  id: '12'
 }];
  
 module.exports = products;

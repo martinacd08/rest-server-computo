@@ -2,15 +2,18 @@
 var express = require('express'),
     app     = express();
 	
-var products = require('./BL/products.js');
+
+var products = require('./products.js');
 	
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 
-app.get('/', products.getAll);
+app.get('/:id', products.getSaldoCorriente);
 
-/*
+
+
+
 app.get('/', function(req,res){
     connectionpool.getConnection(function(err, connection) {
         if (err) {
@@ -42,7 +45,7 @@ app.get('/', function(req,res){
         }
     });
 });
-*/
+
 
 
 app.listen(app.get('port'), function() {
