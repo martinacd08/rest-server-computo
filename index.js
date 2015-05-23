@@ -7,6 +7,7 @@ app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/cetys'));
 app.use(express.static(__dirname + '/UI'));
+app.use(express.static(__dirname + '/UI/assets'));
 
 
 app.get('/cetys', function(req, res) {
