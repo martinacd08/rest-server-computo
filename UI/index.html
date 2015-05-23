@@ -365,12 +365,34 @@
 				}
 			};
 			
+			var req = {
+ method: 'GET',
+ url: 'https://safe-ravine-5890.herokuapp.com/HelloService/hola',
+ headers: {
+ 'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST',
+                'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With',
+ }
+}
+			
+			
 			$scope.soap = function($event){
-				$http.get("https://safe-ravine-5890.herokuapp.com/HelloService/hola")
+				/*$http.get("https://safe-ravine-5890.herokuapp.com/HelloService/hola")
 			.success(function(response) {alert(response)});
 			
 			$http.get("https://rest-server-computo.herokuapp.com/fracs")
-			.success(function(response) {$scope.nombres = response.json; });
+			.success(function(response) {$scope.nombres = response.json; });*/
+			
+			/*$http(req).success(function(response) {alert(response)}).error(function(){alert("error")});*/
+			
+			
+			 var url = "https://rest-server-computo.herokuapp.com/fracs?callback=JSON_CALLBACK";
+
+    $http.jsonp(url)
+        .success(function(data){
+            $scope.nombres = data;
+        }).error(function(error){alert(error)});
+			
 			
 			};
 		});
