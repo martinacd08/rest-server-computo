@@ -330,7 +330,7 @@
 	$(".frac_table").hide();
 		var app = angular.module('index', []);
 		app.controller('index_ctrl', function($scope, $http) {
-			$http.get("http://localhost:5000/fraccionamientos")
+			$http.get("https://rest-server-computo.herokuapp.com/fracs")
 			.success(function(response) {$scope.nombres = response.json;});
 			
 			
