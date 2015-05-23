@@ -330,8 +330,9 @@
 	$(".frac_table").hide();
 		var app = angular.module('index', []);
 		app.controller('index_ctrl', function($scope, $http) {
-			$http.get("https://rest-server-computo.herokuapp.com/fracs")
-			.success(function(response) {$scope.nombres = response.json; alert("sdsD")});
+		
+		
+			
 			
 			
 			$scope.menu2= [];
@@ -367,6 +368,9 @@
 			$scope.soap = function($event){
 				$http.get("https://safe-ravine-5890.herokuapp.com/HelloService/hola")
 			.success(function(response) {alert(response)});
+			
+			$http.get("https://rest-server-computo.herokuapp.com/fracs")
+			.success(function(response) {$scope.nombres = response.json; });
 			
 			};
 		});
