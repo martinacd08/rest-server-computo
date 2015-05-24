@@ -392,7 +392,8 @@
 			
 			
 			$http.get("https://safe-ravine-5890.herokuapp.com/HelloService/hola")
-			.success(function(response) {console.log(response); });
+			.success(function(response) {console.log(response); })
+			.error(function(response) {console.log(response); });
 			
 			
 			/*
