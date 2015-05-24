@@ -328,7 +328,11 @@
 	
 	<script>
 	$(".frac_table").hide();
-		var app = angular.module('index', []);
+		var app = angular.module('index', []).config(function($httpProvider){
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+	});
+		
+		
 		
 		
 	
@@ -385,6 +389,10 @@
 			
 			$http.get("https://rest-server-computo.herokuapp.com/fracs")
 			.success(function(response) {$scope.nombres = response; });
+			
+			
+			$http.get("https://safe-ravine-5890.herokuapp.com/HelloService/hola")
+			.success(function(response) {console.log(response); });
 			
 			
 			/*
