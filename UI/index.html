@@ -216,7 +216,7 @@
 									  				{{x.Nombre}}
 									  			</td>
 									  			<td class="text-center">
-									  				<input type="checkbox" class="custom-checkbox" id={{x.CodFrac}} name={{x.Nombre}} checked="">
+									  				<input type="checkbox" class="custom-checkbox" id={{x.CodFrac}} name={{x.Nombre}} checked="" ng-click="calcularFracs()">
 														<label for={{x.CodFrac}}></label>
 									  			</td>
 									  		</tr>
@@ -240,17 +240,17 @@
 					<div class="col-md-12">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								Fraccionamiento: {{}}
+								Fraccionamiento: {{objeto.nombre}}
 							</div>        
 							<div class="panel-body"> 
 								<div class="alert alert-success col-md-4">
-									<strong>Saldo Corriente: </strong> ${{}}
+									<strong>Saldo Corriente: </strong> ${{objeto.saldoCorriente}}
 								</div>
 								<div class="alert alert-danger col-md-4">
-									<strong>Saldo Vencido: </strong>${{}}
+									<strong>Saldo Vencido: </strong>${{objeto.saldoVencido}}
 								</div>
 								<div class="alert alert-info col-md-4">
-									<strong>Saldo Recuperado: </strong> ${{}}
+									<strong>Saldo Recuperado: </strong> ${{objeto.saldoRecuperado}}
 								</div>
 							</div>
 						</div>
@@ -274,27 +274,28 @@
 												
 									  		</tr>
 									  	</thead>
-									  	<tbody ng-repeat="x in nombres track by $index">
+									  	<tbody ng-repeat="x in objeto.expedientes track by $index">
 										
 											<tr>
 												<td class="text-center">
 									  				{{}}
 									  			</td>
 												<td class="text-center">
-									  				{{}}
+									  				{{x.Exp}}
 									  			</td>
 												<td class="text-center">
-									  				{{}}
+									  				{{x.Titular}}
 									  			</td>
 												<td class="text-center">
-									  				{{}}
+									  				{{x.FechaPago}}
 									  			</td>
 												<td class="text-center">
-									  				{{}}
+									  				{{x.vencido}}
 									  			</td>
 												<td class="text-center">
-									  				{{}}
+									  				{{x.corriente}}
 									  			</td>
+												
 									  			
 									  			
 									  		</tr>
@@ -326,6 +327,8 @@
     <!-- Custom Js -->
     <script src="assets/js/custom-scripts.js"></script>
 	
+	<script src="assets/js/xml2json.min.js"></script>
+	
 	<script>
 	$(".frac_table").hide();
 		var app = angular.module('index', []).config(function($httpProvider){
@@ -333,25 +336,16 @@
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
 	});
 		
-		
-		
-		
-	
-
-
-		
-		
-		
 		app.controller('index_ctrl', function($scope, $http) {
-		
-		
-			
-			
 			
 			$scope.menu2= [];
 			
 			var objeto = {id:"0", nombre:"Calcular Fraccionamiento"};
 			$scope.menu2.push(objeto);
+			
+			
+			
+			
 			
 			$scope.calcularFracs =  function(){
 			$scope.menu2= [];
@@ -361,55 +355,122 @@
 			
 				$('input:checked').each(function() 
 				{
-				    var objeto = {id:$(this).attr('id'), nombre:$(this).attr('name')};
-					$scope.menu2.push(objeto);
+					$scope.id = $(this).attr('id');
+					$scope.nombre = $(this).attr('name');
+					$scope.expedinetes;
+					$scope.saldoVencido;
+					$scope.saldoCorriente;
+					$scope.saldoRecuperado;
+					
+				   
+					/*
+					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/expedientes")
+					.success(function(response) {$scope.expedinetes = response; });
+					
+					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoCorriente")
+					.success(function(response) {$scope.saldoCorriente = response; });
+					
+					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoRecuperado")
+					.success(function(response) {$scope.saldoRecuperado = response; });
+					
+					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoVencido")
+					.success(function(response) {$scope.saldoVencido = response; });
+					
+					*/
+					
+					
+					 $scope.objeto = {
+									id:$scope.id, 
+									nombre:$scope.nombre, 
+									expedientes:$scope.expedientes,
+									saldoCorriente:$scope.saldoCorriente,
+									saldoRecuperado:$scope.saldoRecuperado,
+									saldoVencido:$scope.saldoVencido};
+						$scope.menu2.push($scope.objeto);
 				});
 			};
 			
-			$scope.toggleTables = function($event){
 			
+			
+			
+			
+			$scope.toggleTables = function($event){
+			var id =$event.currentTarget.id;
 				if($event.currentTarget.id != 0){
 					$(".frac_table").show();
 					$(".all_fracs_table").hide();
+					$scope.MostrarFrac(id);
 				}
 				else{
 					$(".frac_table").hide();
 					$(".all_fracs_table").show();
 				}
+				
+			};
+			
+			$scope.MostrarFrac = function(id){
+				
+				
+				var objeto = $scope.buscarFrac(id);
+				
+				
+					$scope.expedinetes;
+					$scope.saldoVencido;
+					$scope.saldoCorriente;
+					$scope.saldoRecuperado;
+					
+				   
+					
+					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/expedientes")
+					.success(function(response) {$scope.expedinetes = response; });
+					
+					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoCorriente")
+					.success(function(response) {$scope.saldoCorriente = response; });
+					
+					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoRecuperado")
+					.success(function(response) {$scope.saldoRecuperado = response; });
+					
+					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoVencido")
+					.success(function(response) {$scope.saldoVencido = response; });
+					
+					
+					
+					
+					 $scope.objeto = {
+									id:id, 
+									nombre:objeto.nombre, 
+									expedientes:$scope.expedientes,
+									saldoCorriente:$scope.saldoCorriente,
+									saldoRecuperado:$scope.saldoRecuperado,
+									saldoVencido:$scope.saldoVencido};
+				
+				
+				
+			
+			};
+			
+			$scope.buscarFrac = function(id) {
+				return $scope.menu2[0].id === id;
 			};
 			
 			
 			
 			
 			$scope.soap = function($event){
-	
 			
-			
-			/*	$http.get("https://safe-ravine-5890.herokuapp.com/HelloService/hola")
-			.success(function(response) {alert(response)});*/
-			
-			$http.get("https://rest-server-computo.herokuapp.com/fracs")
-			.success(function(response) {$scope.nombres = response; });
-			
-			
-			$http.get("http://soapjaxws.herokuapp.com/HelloService/pagar?arg0=01200000000000699")
-			.success(function(response) {console.log(response); })
-			.error(function(response) {console.log(response); });
-			
-			
-			/*
-			$.ajax({
-					url: 'https://safe-ravine-5890.herokuapp.com/HelloService/hola',
-					data: {},
-					type: 'GET',
-					crossDomain: true, // enable this
-					dataType: 'text/xml',
-					success: function() { alert("Success"); },
-					error: function() { alert('Failed!'); },
-					beforeSend: setHeader
-				}); 
-				*/
-    
+				$http.get("https://rest-server-computo.herokuapp.com/fracs")
+				.success(function(response) {$scope.nombres = response; });
+				
+				
+				$http.get("http://soapjaxws.herokuapp.com/HelloService/pagar", {params: { arg0: 01200000000000699 }})
+				.success(function(response) {
+					var xmlText = response;
+					var x2js = new X2JS();
+					var jsonObj = x2js.xml_str2json( xmlText );
+					console.log(jsonObj.Envelope.Body.pagarResponse.return);
+				
+				})
+				.error(function(response) {console.log(response); });
 			
 			};
 		});

@@ -58,7 +58,7 @@ module.exports.getSaldoVencidoByFrac = function (id, cb) {
 		
        cb(err);
 	}
-    conn.query('select  SUM(movimientos.SaldoMov) AS SaldoCorriente FROM movimientos where movimientos.CodFrac = '+id.toString()+' and  Cast(movimientos.FechaV as datetime) < curdate();',
+    conn.query('select  SUM(movimientos.SaldoMov) AS SaldoVencido FROM movimientos where movimientos.CodFrac = '+id.toString()+' and  Cast(movimientos.FechaV as datetime) < curdate();',
                function(err, rows) {
       conn.release();
 	  
