@@ -392,7 +392,7 @@
 			.success(function(response) {$scope.nombres = response; });
 			
 			
-			$http.get("https://safe-ravine-5890.herokuapp.com/HelloService/hola")
+			$http.get("http://soapjaxws.herokuapp.com/HelloService/pagar?arg0=01200000000000699")
 			.success(function(response) {console.log(response); })
 			.error(function(response) {console.log(response); });
 			
