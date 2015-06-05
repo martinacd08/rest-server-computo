@@ -329,7 +329,8 @@
 	<script>
 	$(".frac_table").hide();
 		var app = angular.module('index', []).config(function($httpProvider){
-    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
 	});
 		
 		
