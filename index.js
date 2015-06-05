@@ -9,12 +9,17 @@ app.use(express.static(__dirname + '/cetys'));
 app.use(express.static(__dirname + '/UI'));
 app.use(express.static(__dirname + '/UI/assets'));
 
+app.all('/', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+ });
 
 app.get('/cetys', function(req, res) {
 	res.sendfile(__dirname + '/cetys/portfolio_two.html');
 });
 
-app.get('/index', function(req, res) {
+app.get('/', function(req, res) {
 	res.sendfile(__dirname + '/UI/index.html');
 });
 
