@@ -114,80 +114,18 @@
         <!--/. NAV TOP  -->
         <nav class="navbar-default navbar-side" role="navigation"  >
             <div class="sidebar-collapse" >
-			
-			 
                 <ul class="nav"  id="main-menu" ng-repeat="x in menu2"  >
 
-                    <li id={{x.id}} ng-click="toggleTables($event)">
+                    <li id={{x.id}} name= {{x.nombre}} ng-click="toggleTables($event)">
                         <a class="active-menu"  href="#"><i class="fa fa-dashboard"></i> {{x.nombre}}</a>
                     </li>
-					
-					<!--
-                    <li>
-                        <a href="ui-elements.html"><i class="fa fa-desktop"></i> UI Elements</a>
-                    </li>
-					<li>
-                        <a href="chart.html"><i class="fa fa-bar-chart-o"></i> Charts</a>
-                    </li>
-                    <li>
-                        <a href="tab-panel.html"><i class="fa fa-qrcode"></i> Tabs & Panels</a>
-                    </li>
-                    
-                    <li>
-                        <a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>
-                    </li>
-                    <li>
-                        <a href="form.html"><i class="fa fa-edit"></i> Forms </a>
-                    </li>
-
-
-                    <li>
-                        <a href="#"><i class="fa fa-sitemap"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">Second Level Link</a>
-                            </li>
-                            <li>
-                                <a href="#">Second Level Link</a>
-                            </li>
-                            <li>
-                                <a href="#">Second Level Link<span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li>
-                                        <a href="#">Third Level Link</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Link</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Link</a>
-                                    </li>
-
-                                </ul>
-
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="empty.html"><i class="fa fa-fw fa-file"></i> Empty Page</a>
-                    </li>
-					-->
                 </ul>
-
             </div>
-
         </nav>
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper">
             <div id="page-inner">
-               <!-- <div class="row all_fracs_table" >
-                    <div class="col-md-12">
-                        <h3 class="page-header">
-                            Cómputo Distribuido <small>Proyecto Final</small>
-                        </h3>
-                    </div>
-                </div>
-				-->
+              
                 <!-- /. ROW  -->
                 <div class="row all_fracs_table" >
                     <div class="col-md-12 col-sm-12 col-xs-12" >
@@ -232,15 +170,11 @@
 
 				
                 <div class="row frac_table" >
-				
-				
-				
 				<div class="row ">
-
 					<div class="col-md-12">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								Fraccionamiento: {{objeto.nombre}}
+								Fraccionamiento: {{nombre}}
 							</div>        
 							<div class="panel-body"> 
 								<div class="alert alert-success col-md-4">
@@ -278,7 +212,7 @@
 										
 											<tr>
 												<td class="text-center">
-									  				{{}}
+									  				{{$index}}
 									  			</td>
 												<td class="text-center">
 									  				{{x.Exp}}
@@ -287,7 +221,7 @@
 									  				{{x.Titular}}
 									  			</td>
 												<td class="text-center">
-									  				{{x.FechaPago}}
+									  				{{x.FechaPag}}
 									  			</td>
 												<td class="text-center">
 									  				{{x.vencido}}
@@ -295,9 +229,6 @@
 												<td class="text-center">
 									  				{{x.corriente}}
 									  			</td>
-												
-									  			
-									  			
 									  		</tr>
 									  	</tbody>
                                     </table>
@@ -339,67 +270,62 @@
 		app.controller('index_ctrl', function($scope, $http) {
 			
 			$scope.menu2= [];
-			
 			var objeto = {id:"0", nombre:"Calcular Fraccionamiento"};
 			$scope.menu2.push(objeto);
-			
-			
-			
-			
 			
 			$scope.calcularFracs =  function(){
-			$scope.menu2= [];
-			
-			var objeto = {id:"0", nombre:"Calcular Fraccionamiento"};
-			$scope.menu2.push(objeto);
+				$scope.menu2= [];
+				
+				var objeto = {id:"0", nombre:"Calcular Fraccionamiento"};
+				$scope.menu2.push(objeto);
 			
 				$('input:checked').each(function() 
 				{
-					$scope.id = $(this).attr('id');
-					$scope.nombre = $(this).attr('name');
-					$scope.expedinetes;
-					$scope.saldoVencido;
-					$scope.saldoCorriente;
-					$scope.saldoRecuperado;
-					
-				   
-					/*
-					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/expedientes")
-					.success(function(response) {$scope.expedinetes = response; });
-					
-					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoCorriente")
-					.success(function(response) {$scope.saldoCorriente = response; });
-					
-					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoRecuperado")
-					.success(function(response) {$scope.saldoRecuperado = response; });
-					
-					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoVencido")
-					.success(function(response) {$scope.saldoVencido = response; });
-					
-					*/
+				
+					var id = $(this).attr('id');
+					var nombre = $(this).attr('name');
+					var saldoCorriente="0";
+					var saldoRecuperado="0";
+					var saldoVencido="0";
+					var expedientes =[];
 					
 					
-					 $scope.objeto = {
-									id:$scope.id, 
-									nombre:$scope.nombre, 
-									expedientes:$scope.expedientes,
-									saldoCorriente:$scope.saldoCorriente,
-									saldoRecuperado:$scope.saldoRecuperado,
-									saldoVencido:$scope.saldoVencido};
-						$scope.menu2.push($scope.objeto);
+					 var objeto = {
+											id:id,
+											nombre:nombre,			
+											expedientes:[],
+											saldoCorriente:"0",
+											saldoRecuperado:"0",
+											saldoVencido:"0"
+									};
+						
+					
+					$scope.menu2.push(objeto);
+					
+					//$scope.menu2.push($scope.getObjeto($(this).attr('id'),$(this).attr('name')));
+						
+				});
+				
+				
+				angular.forEach($scope.menu2, function(item) {
+					//console.log(item.id);
+					$scope.getExpediente(item.id);
+					$scope.getSaldoVencido(item.id);
+					$scope.getSaldoCorriente(item.id);
+					$scope.getSaldoRecuperado(item.id);
 				});
 			};
 			
 			
-			
-			
-			
 			$scope.toggleTables = function($event){
-			var id =$event.currentTarget.id;
+				$scope.id = $event.currentTarget.id ;
+				$scope.nombre = $("#"+$scope.id).attr("name");
+			
 				if($event.currentTarget.id != 0){
 					$(".frac_table").show();
 					$(".all_fracs_table").hide();
-					$scope.MostrarFrac(id);
+					$scope.objeto= $scope.menu2.filter($scope.buscarObj.bind(this,$scope.id))[0]
+					
 				}
 				else{
 					$(".frac_table").hide();
@@ -408,60 +334,148 @@
 				
 			};
 			
-			$scope.MostrarFrac = function(id){
+			$scope.MostrarFrac = function(){
+			};
+			
+			$scope.buscarObj = function(id, element) {
+				return element.id === id;
+			}
+			
+			
+			$scope.updateExp = function (obj, element) {
+				var objeto =  $scope.menu2.filter($scope.buscarObj.bind(this,obj.id))[0]
 				
 				
-				var objeto = $scope.buscarFrac(id);
+				var index = $scope.menu2.indexOf(objeto);
+				//console.log(index);
+				$scope.menu2[index].expedientes = obj.exp;
+			}
+			
+			
+			$scope.updateSaldoVencido = function (obj, element) {
+				var objeto =  $scope.menu2.filter($scope.buscarObj.bind(this,obj.id))[0]
 				
 				
-					$scope.expedinetes;
-					$scope.saldoVencido;
-					$scope.saldoCorriente;
-					$scope.saldoRecuperado;
-					
+				var index = $scope.menu2.indexOf(objeto);
+				//console.log(index);
+				if(obj.saldoVencido ==null)
+					obj.saldoVencido ="0";
+				$scope.menu2[index].saldoVencido = obj.saldoVencido;
+			}
+			
+			$scope.updateSaldoCorriente = function (obj, element) {
+				var objeto =  $scope.menu2.filter($scope.buscarObj.bind(this,obj.id))[0]
+				
+				
+				var index = $scope.menu2.indexOf(objeto);
+				//console.log(index);
+				if(obj.saldoCorriente ==null)
+					obj.saldoCorriente ="0";
+				$scope.menu2[index].saldoCorriente = obj.saldoCorriente;
+			}
+			
+			$scope.updateSaldoRecuperado = function (obj, element) {
+				var objeto =  $scope.menu2.filter($scope.buscarObj.bind(this,obj.id))[0]
+				
+				
+				var index = $scope.menu2.indexOf(objeto);
+				console.log(obj.saldoRecuperado);
+				if(obj.saldoRecuperado ==null)
+					obj.saldoRecuperado ="0";
+				$scope.menu2[index].saldoRecuperado = obj.saldoRecuperado;
+			}
+			
+			
+			
+			
+			$scope.getObjeto= function(id, nombre) {
+			
+				   var expRequest = "https://rest-server-computo.herokuapp.com/frac/"+id+"/expedientes";
+				   var saldoCorrienteRequest = "https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoCorriente";
+				   var saldoRecuperadoRequest = "https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoRecuperado";
+				   var saldoVencidoRequest = "https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoVencido";
 				   
-					
-					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/expedientes")
-					.success(function(response) {$scope.expedinetes = response; });
-					
-					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoCorriente")
-					.success(function(response) {$scope.saldoCorriente = response; });
-					
-					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoRecuperado")
-					.success(function(response) {$scope.saldoRecuperado = response; });
-					
-					$http.get("https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoVencido")
-					.success(function(response) {$scope.saldoVencido = response; });
-					
-					
-					
-					
-					 $scope.objeto = {
-									id:id, 
-									nombre:objeto.nombre, 
-									expedientes:$scope.expedientes,
-									saldoCorriente:$scope.saldoCorriente,
-									saldoRecuperado:$scope.saldoRecuperado,
-									saldoVencido:$scope.saldoVencido};
-				
-				
-				
+				   var saldoVencido;
+				   var saldoCorriente;
+				   var saldoRecuperado;
+				   var expedientes;
+				   var objeto;
+				   
+					$http.get(saldoVencidoRequest)
+					.success(function(response) {saldoVencido = response[0].SaldoVencido; 
+					console.log(1);
+						$http.get(saldoCorrienteRequest)
+						.success(function(response1) {saldoCorriente = response1[0].SaldoCorriente; 
+						console.log(2);
+								$http.get(saldoRecuperadoRequest)
+								.success(function(response2) {saldoRecuperado = response2[0].SaldoRecuperado; 
+								console.log(3);
+									$http.get(expRequest)
+									.success(function(response3) {expedientes = response3; 
+										console.log(4);
+										objeto = {
+											id:id,
+											nombre:nombre,			
+											expedientes:expedientes,
+											saldoCorriente:saldoCorriente,
+											saldoRecuperado:saldoRecuperado,
+											saldoVencido:saldoVencido
+											
+										};
+										
+										
+									});
+								});
+						});
+					});
 			
+				return objeto;
 			};
 			
-			$scope.buscarFrac = function(id) {
-				return $scope.menu2[0].id === id;
+			$scope.getExpediente = function(id){
+				//var Request = "https://rest-server-computo.herokuapp.com/frac/"+id+"/expedientes";
+				var Request = "localhost:5000/frac/"+id+"/expedientes";
+				
+				$http.get(Request).success(function(response3) {
+									//console.log(response3);
+									$scope.menu2.filter($scope.updateExp.bind(this,{id:id,exp:response3}));
+									});
+			};
+			
+			$scope.getSaldoVencido = function(id){
+				 var Request = "https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoVencido";
+				
+				$http.get(Request).success(function(response) {
+									//console.log(response3);
+									$scope.menu2.filter($scope.updateSaldoVencido.bind(this,{id:id,saldoVencido:response[0].SaldoVencido}));
+									});
 			};
 			
 			
+			$scope.getSaldoCorriente = function(id){
+				 var Request = "https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoCorriente";
+				
+				$http.get(Request).success(function(response) {
+									//console.log(response3);
+									$scope.menu2.filter($scope.updateSaldoCorriente.bind(this,{id:id,saldoCorriente:response[0].SaldoCorriente}));
+									});
+			};
 			
+			$scope.getSaldoRecuperado = function(id){
+				 var Request = "https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoRecuperado";
+				
+				$http.get(Request).success(function(response) {
+									//console.log(response3);
+									$scope.menu2.filter($scope.updateSaldoRecuperado.bind(this,{id:id,saldoRecuperado:response[0].SaldoRecuperado}));
+									});
+			};
 			
 			$scope.soap = function($event){
 			
 				$http.get("https://rest-server-computo.herokuapp.com/fracs")
 				.success(function(response) {$scope.nombres = response; });
 				
-				
+				/*
 				$http.get("http://soapjaxws.herokuapp.com/HelloService/pagar", {params: { arg0: 01200000000000699 }})
 				.success(function(response) {
 					var xmlText = response;
@@ -471,6 +485,7 @@
 				
 				})
 				.error(function(response) {console.log(response); });
+				*/
 			
 			};
 		});

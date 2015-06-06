@@ -45,7 +45,13 @@ var business = {
 		dataAccess.getExpedientesByFrac(req.params.id,function(err, rows) {
 			res.json(rows);
 		});
+	},
+	getExpSaldoCorrienteByFrac: function(req, res,next) {
+		dataAccess.getExpSaldoCorrienteByFrac(req.params.id,function(err, rows) {
+			res.json(rows);
+		});
 	}
+	
 };
 
 module.exports = business;

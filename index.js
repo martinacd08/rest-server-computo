@@ -34,6 +34,8 @@ app.get('/frac/:id/saldoRecuperado', business.getSaldoRecuperadoByFrac);
 
 app.get('/frac/:id/expedientes', business.getExpedientesByFrac);
 
+app.get('/frac/:id/expediente/saldoCorriente', business.getExpSaldoCorrienteByFrac);
+
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));

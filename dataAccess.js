@@ -88,7 +88,23 @@ module.exports.getExpedientesByFrac = function (id, cb) {
 		
        cb(err);
 	}
-    conn.query('SELECT Cont.Exp,  Cont.Titular, resultado.FechaPag, V.vencido, C.corriente FROM contratos as Cont JOIN (SELECT pg.codFrac, Max(pg.fechaPag) FechaPag, pg.Exp FROM pagmov as pg WHERE pg.CodFrac = '+id.toString()+' GROUP BY pg.CodFrac, pg.Exp) as resultado ON resultado.CodFrac = Cont.CodFrac and resultado.Exp = Cont.Exp JOIN (SELECT MV.CodFrac, MV.Exp, SUM(MV.SaldoMov) vencido FROM movimientos MV WHERE MV.CodFrac = '+id.toString()+' and cast( MV.FechaV as date) < curdate() GROUP BY MV.CodFrac, MV.Exp) V ON V.CodFrac = Cont.CodFrac and V.Exp = Cont.Exp JOIN (SELECT MV.CodFrac, MV.Exp, SUM(MV.SaldoMov) corriente FROM movimientos MV WHERE MV.CodFrac = '+id.toString()+' and cast( MV.FechaV as date) >= curdate() GROUP BY MV.CodFrac, MV.Exp) C ON C.CodFrac = Cont.CodFrac and C.Exp = Cont.Exp WHERE Cont.CodFrac = '+id.toString()+';',
+    conn.query(
+"SELECT Cont.Exp,  Cont.Titular, resultado.FechaPag, V.vencido\n" +
+"FROM contratos as Cont \n" +
+"JOIN (\n" +
+"SELECT pg.codFrac, Max(pg.fechaPag) FechaPag, pg.Exp FROM pagmov as pg \n" +
+"WHERE pg.CodFrac = "+id.toString()+" \n" +
+"GROUP BY  pg.Exp) as resultado \n" +
+"ON  resultado.Exp = Cont.Exp \n" +
+"\n" +
+"JOIN (SELECT MV.CodFrac, MV.Exp, SUM(MV.SaldoMov) vencido \n" +
+"FROM movimientos MV\n" +
+"WHERE MV.CodFrac = "+id.toString()+"\n" +
+"and cast( MV.FechaV as date) < curdate()\n" +
+"GROUP BY MV.Exp) as V \n" +
+"ON  V.Exp = Cont.Exp \n" +
+"WHERE Cont.CodFrac = "+id.toString()+"\n" +
+"GROUP BY Cont.Exp;",
                function(err, rows) {
       conn.release();
 	  
@@ -97,3 +113,23 @@ module.exports.getExpedientesByFrac = function (id, cb) {
   });
 };
 
+
+module.exports.getExpSaldoCorrienteByFrac = function (id, cb) {
+  connectionpool.getConnection(function(err, conn) {
+    if (err){
+		
+       cb(err);
+	}
+    conn.query(
+"SELECT  MV.Exp, SUM(MV.SaldoMov)  corriente \n" +
+"FROM movimientos MV\n" +
+"WHERE CodFrac = "+id.toString()+"\n" +
+"and cast( MV.FechaV as date) >= curdate()\n" +
+"GROUP BY MV.Exp;",
+               function(err, rows) {
+      conn.release();
+	  
+      cb(err, rows);
+    });
+  });
+};
