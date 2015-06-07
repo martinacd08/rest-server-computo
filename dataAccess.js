@@ -111,7 +111,7 @@ module.exports.getExpedientesByFrac = function (id,page, cb) {
 "        ON  C.Exp = Cont.Exp\n" +
 "WHERE Cont.CodFrac = "+id.toString()+"\n" +
 "\n" +
-"GROUP BY Cont.Exp LIMIT "+page*30+", 30;",
+"GROUP BY Cont.Exp LIMIT "+page*20+", 20;",
                function(err, rows) {
       conn.release();
 	  
