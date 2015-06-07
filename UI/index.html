@@ -441,6 +441,10 @@
 					.success(
 						function(response3) {
 							$scope.menu2.filter($scope.updateExp.bind(this,{id:id,exp:response3}));
+						})
+						.error(
+						function(response3) {
+							$scope.getExpediente(id);
 						});
 			};
 			
@@ -451,6 +455,10 @@
 					.success(
 						function(response) {
 							$scope.menu2.filter($scope.updateSaldoVencido.bind(this,{id:id,saldoVencido:response[0].SaldoVencido}));
+						})
+						.error(
+						function(response3) {
+							$scope.getSaldoVencido(id);
 						});
 			};
 			
@@ -461,7 +469,10 @@
 				$http.get(Request).success(function(response) {
 									//console.log(response3);
 									$scope.menu2.filter($scope.updateSaldoCorriente.bind(this,{id:id,saldoCorriente:response[0].SaldoCorriente}));
-									});
+									}).error(
+						function(response3) {
+							$scope.getSaldoCorriente(id);
+						});
 			};
 			
 			$scope.getSaldoRecuperado = function(id){
@@ -470,7 +481,10 @@
 				$http.get(Request).success(function(response) {
 									//console.log(response3);
 									$scope.menu2.filter($scope.updateSaldoRecuperado.bind(this,{id:id,saldoRecuperado:response[0].SaldoRecuperado}));
-									});
+									}).error(
+						function(response3) {
+							$scope.getSaldoRecuperado(id);
+						});
 			};
 			
 			$scope.soap = function($event){
