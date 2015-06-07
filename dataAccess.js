@@ -82,29 +82,35 @@ module.exports.getSaldoRecuperadoByFrac = function (id, cb) {
   });
 };
 
-module.exports.getExpedientesByFrac = function (id, cb) {
+module.exports.getExpedientesByFrac = function (id,page, cb) {
   connectionpool.getConnection(function(err, conn) {
     if (err){
 		
        cb(err);
 	}
     conn.query(
-"SELECT Cont.Exp,  Cont.Titular, resultado.FechaPag, V.vencido\n" +
+"SELECT Cont.Exp,  Cont.Titular, resultado.FechaPag, V.vencido, IFNULL(C.corriente,0) as corriente\n" +
 "FROM contratos as Cont \n" +
-"JOIN (\n" +
-"SELECT pg.codFrac, Max(pg.fechaPag) FechaPag, pg.Exp FROM pagmov as pg \n" +
-"WHERE pg.CodFrac = "+id.toString()+" \n" +
+"JOIN (SELECT pg.codFrac, Max(pg.fechaPag) FechaPag, pg.Exp FROM pagmov as pg \n" +
 "GROUP BY  pg.Exp) as resultado \n" +
 "ON  resultado.Exp = Cont.Exp \n" +
 "\n" +
-"JOIN (SELECT MV.CodFrac, MV.Exp, SUM(MV.SaldoMov) vencido \n" +
-"FROM movimientos MV\n" +
-"WHERE MV.CodFrac = "+id.toString()+"\n" +
-"and cast( MV.FechaV as date) < curdate()\n" +
-"GROUP BY MV.Exp) as V \n" +
-"ON  V.Exp = Cont.Exp \n" +
+" JOIN (SELECT MV.CodFrac, MV.Exp, SUM(MV.SaldoMov) vencido \n" +
+"        FROM movimientos MV\n" +
+"        WHERE MV.CodFrac = "+id.toString()+"\n" +
+"        and cast( MV.FechaV as date) < curdate()\n" +
+"        GROUP BY MV.Exp) as V \n" +
+"        ON  V.Exp = Cont.Exp\n" +
+"        \n" +
+"left JOIN (SELECT MV.CodFrac, MV.Exp, SUM(MV.SaldoMov) corriente \n" +
+"        FROM movimientos MV\n" +
+"        WHERE MV.CodFrac = "+id.toString()+"\n" +
+"        and cast( MV.FechaV as date) > curdate()\n" +
+"        GROUP BY MV.Exp) as C \n" +
+"        ON  C.Exp = Cont.Exp\n" +
 "WHERE Cont.CodFrac = "+id.toString()+"\n" +
-"GROUP BY Cont.Exp;",
+"\n" +
+"GROUP BY Cont.Exp LIMIT "+page*30+", 30;",
                function(err, rows) {
       conn.release();
 	  

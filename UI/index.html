@@ -349,6 +349,9 @@
 				var index = $scope.menu2.indexOf(objeto);
 				//console.log(index);
 				$scope.menu2[index].expedientes = obj.exp;
+				
+				
+				
 			}
 			
 			
@@ -379,7 +382,7 @@
 				
 				
 				var index = $scope.menu2.indexOf(objeto);
-				console.log(obj.saldoRecuperado);
+				//console.log(obj.saldoRecuperado);
 				if(obj.saldoRecuperado ==null)
 					obj.saldoRecuperado ="0";
 				$scope.menu2[index].saldoRecuperado = obj.saldoRecuperado;
@@ -433,22 +436,22 @@
 			};
 			
 			$scope.getExpediente = function(id){
-				//var Request = "https://rest-server-computo.herokuapp.com/frac/"+id+"/expedientes";
-				var Request = "localhost:5000/frac/"+id+"/expedientes";
-				
-				$http.get(Request).success(function(response3) {
-									//console.log(response3);
-									$scope.menu2.filter($scope.updateExp.bind(this,{id:id,exp:response3}));
-									});
+				var Request = "https://rest-server-computo.herokuapp.com/frac/"+id+"/expedientes/0";
+				$http.get(Request)
+					.success(
+						function(response3) {
+							$scope.menu2.filter($scope.updateExp.bind(this,{id:id,exp:response3}));
+						});
 			};
 			
 			$scope.getSaldoVencido = function(id){
-				 var Request = "https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoVencido";
+				var Request = "https://rest-server-computo.herokuapp.com/frac/"+id+"/saldoVencido";
 				
-				$http.get(Request).success(function(response) {
-									//console.log(response3);
-									$scope.menu2.filter($scope.updateSaldoVencido.bind(this,{id:id,saldoVencido:response[0].SaldoVencido}));
-									});
+				$http.get(Request)
+					.success(
+						function(response) {
+							$scope.menu2.filter($scope.updateSaldoVencido.bind(this,{id:id,saldoVencido:response[0].SaldoVencido}));
+						});
 			};
 			
 			

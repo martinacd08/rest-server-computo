@@ -32,7 +32,7 @@ app.get('/frac/:id/saldoVencido', business.getSaldoVencidoByFrac);
 
 app.get('/frac/:id/saldoRecuperado', business.getSaldoRecuperadoByFrac);
 
-app.get('/frac/:id/expedientes', business.getExpedientesByFrac);
+app.get('/frac/:id/expedientes/:page', business.getExpedientesByFrac);
 
 app.get('/frac/:id/expediente/saldoCorriente', business.getExpSaldoCorrienteByFrac);
 

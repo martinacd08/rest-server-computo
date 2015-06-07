@@ -42,7 +42,7 @@ var business = {
 		});
 	},
 	getExpedientesByFrac: function(req, res,next) {
-		dataAccess.getExpedientesByFrac(req.params.id,function(err, rows) {
+		dataAccess.getExpedientesByFrac(req.params.id,req.params.page,function(err, rows) {
 			res.json(rows);
 		});
 	},
