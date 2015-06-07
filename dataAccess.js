@@ -5,7 +5,7 @@ mysql   = require('mysql'),
         user     		: 	'rigarcia_proyect',
         password 		: 	'proyecto',
         database 		: 	'rigarcia_proyecto',
-		connectTimeout	:	'20000'
+		connectTimeout	:	'500000'
 
     });
 
