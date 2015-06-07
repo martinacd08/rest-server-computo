@@ -3,14 +3,14 @@ var express = require('express'),
     app     = express();
 var business = require('./business.js');
 
-var timeout = require('connect-timeout'); //express v4
+app.use(function(req, res, next){
+    res.setTimeout(220000, function(){
+        console.log('Request has timed out.');
+            res.send(408);
+        });
 
-app.use(timeout(120000));
-app.use(haltOnTimedout);
-
-function haltOnTimedout(req, res, next){
-  if (!req.timedout) next();
-}
+    next();
+});
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
