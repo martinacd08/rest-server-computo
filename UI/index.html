@@ -154,7 +154,7 @@
 									  				{{x.Nombre}}
 									  			</td>
 									  			<td class="text-center">
-									  				<input type="checkbox" class="custom-checkbox" id={{x.CodFrac}} name={{x.Nombre}} checked="" ng-click="calcularFracs()">
+									  				<input type="checkbox" class="custom-checkbox" id={{x.CodFrac}} name={{x.Nombre}} ng-click="calcularFracs()">
 														<label for={{x.CodFrac}}></label>
 									  			</td>
 									  		</tr>
@@ -274,38 +274,30 @@
 			$scope.menu2.push(objeto);
 			
 			$scope.calcularFracs =  function(){
-				$scope.menu2= [];
+				/*$scope.menu2= [];
 				
 				var objeto = {id:"0", nombre:"Calcular Fraccionamiento"};
-				$scope.menu2.push(objeto);
+				$scope.menu2.push(objeto);*/
 			
 				$('input:checked').each(function() 
 				{
-				
-					var id = $(this).attr('id');
-					var nombre = $(this).attr('name');
-					var saldoCorriente="0";
-					var saldoRecuperado="0";
-					var saldoVencido="0";
-					var expedientes =[];
-					
-					
-					 var objeto = {
-											id:id,
-											nombre:nombre,			
-											expedientes:[],
-											saldoCorriente:"0",
-											saldoRecuperado:"0",
-											saldoVencido:"0"
-									};
+					if($scope.menu2.filter($scope.buscarObj.bind(this,$(this).attr('id')))[0] == undefined){					
+						 var objeto = {
+												id:$(this).attr('id'),
+												nombre:$(this).attr('name'),			
+												expedientes:[],
+												saldoCorriente:"0",
+												saldoRecuperado:"0",
+												saldoVencido:"0",
+												bExp:false,
+												bSC:false,
+												bSR:false,
+												bSV:false
+										};
+							
 						
-					
-					$scope.menu2.push(objeto);
-					
-					//$scope.menu2.push($scope.getObjeto($(this).attr('id'),$(this).attr('name')));
-					
-					
-						
+						$scope.menu2.push(objeto);	
+					}
 				});
 				
 				
@@ -313,10 +305,18 @@
 					//console.log(item.id);
 					if(item.id != "0")
 					{
-						$scope.getExpediente(item.id);
-						$scope.getSaldoVencido(item.id);
-						$scope.getSaldoCorriente(item.id);
-						$scope.getSaldoRecuperado(item.id);
+						var obj= $scope.menu2.filter($scope.buscarObj.bind(this,item.id))[0]
+						
+						console.log(obj.bExp +" "+obj.bSC+" "+obj.bSV+" "+obj.bSR);
+						
+						if(obj.bExp == false){$scope.getExpediente(item.id);}
+						
+						if(obj.bSV == false){$scope.getSaldoVencido(item.id);}
+						
+						if(obj.bSC == false){$scope.getSaldoCorriente(item.id);}
+						
+						if(obj.bSR == false){$scope.getSaldoRecuperado(item.id);}
+						
 					}
 				});
 			};
@@ -338,10 +338,7 @@
 				}
 				
 			};
-			
-			$scope.MostrarFrac = function(){
-			};
-			
+
 			$scope.buscarObj = function(id, element) {
 				return element.id === id;
 			}
@@ -349,26 +346,22 @@
 			
 			$scope.updateExp = function (obj, element) {
 				var objeto =  $scope.menu2.filter($scope.buscarObj.bind(this,obj.id))[0]
-				
-				
 				var index = $scope.menu2.indexOf(objeto);
 				//console.log(index);
 				$scope.menu2[index].expedientes = obj.exp;
-				
-				
-				
+				$scope.menu2[index].bExp=true;
 			}
 			
 			
 			$scope.updateSaldoVencido = function (obj, element) {
 				var objeto =  $scope.menu2.filter($scope.buscarObj.bind(this,obj.id))[0]
-				
-				
 				var index = $scope.menu2.indexOf(objeto);
 				//console.log(index);
 				if(obj.saldoVencido ==null)
 					obj.saldoVencido ="0";
+					
 				$scope.menu2[index].saldoVencido = obj.saldoVencido;
+				$scope.menu2[index].bSV=true;
 			}
 			
 			$scope.updateSaldoCorriente = function (obj, element) {
@@ -380,6 +373,7 @@
 				if(obj.saldoCorriente ==null)
 					obj.saldoCorriente ="0";
 				$scope.menu2[index].saldoCorriente = obj.saldoCorriente;
+				$scope.menu2[index].bSC=true;
 			}
 			
 			$scope.updateSaldoRecuperado = function (obj, element) {
@@ -391,6 +385,7 @@
 				if(obj.saldoRecuperado ==null)
 					obj.saldoRecuperado ="0";
 				$scope.menu2[index].saldoRecuperado = obj.saldoRecuperado;
+				$scope.menu2[index].bSR =true;
 			}
 			
 			

@@ -4,7 +4,7 @@ var express = require('express'),
 var business = require('./business.js');
 
 app.use(function(req, res, next){
-    res.setTimeout(200000, function(){
+    res.setTimeout(300000, function(){
         console.log('Request has timed out.');
             res.send(408);
         });
@@ -18,12 +18,23 @@ app.use(express.static(__dirname + '/cetys'));
 app.use(express.static(__dirname + '/UI'));
 app.use(express.static(__dirname + '/UI/assets'));
 
+/*
 app.all('*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
- /* res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');*/
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
+*/
+
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'example.com');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
+app.use(allowCrossDomain);
 
 app.get('/cetys', function(req, res) {
 	res.sendfile(__dirname + '/cetys/portfolio_two.html');
