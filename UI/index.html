@@ -265,6 +265,7 @@
 		var app = angular.module('index', []).config(function($httpProvider){
     $httpProvider.defaults.useXDomain = true;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
+		$httpProvider.defaults.timeout = 500000;
 	});
 		
 		app.controller('index_ctrl', function($scope, $http) {
