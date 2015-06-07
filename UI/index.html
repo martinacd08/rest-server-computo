@@ -224,10 +224,10 @@
 									  				{{x.FechaPag}}
 									  			</td>
 												<td class="text-center">
-									  				{{x.vencido}}
+									  				{{x.corriente}}
 									  			</td>
 												<td class="text-center">
-									  				{{x.corriente}}
+									  				{{x.vencido}}
 									  			</td>
 									  		</tr>
 									  	</tbody>
@@ -303,16 +303,21 @@
 					$scope.menu2.push(objeto);
 					
 					//$scope.menu2.push($scope.getObjeto($(this).attr('id'),$(this).attr('name')));
+					
+					
 						
 				});
 				
 				
 				angular.forEach($scope.menu2, function(item) {
 					//console.log(item.id);
-					$scope.getExpediente(item.id);
-					$scope.getSaldoVencido(item.id);
-					$scope.getSaldoCorriente(item.id);
-					$scope.getSaldoRecuperado(item.id);
+					if(item.id != "0")
+					{
+						$scope.getExpediente(item.id);
+						$scope.getSaldoVencido(item.id);
+						$scope.getSaldoCorriente(item.id);
+						$scope.getSaldoRecuperado(item.id);
+					}
 				});
 			};
 			
@@ -441,6 +446,7 @@
 					.success(
 						function(response3) {
 							$scope.menu2.filter($scope.updateExp.bind(this,{id:id,exp:response3}));
+							console.log(id);
 						})
 						.error(
 						function(response3) {
