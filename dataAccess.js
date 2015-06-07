@@ -92,21 +92,21 @@ module.exports.getExpedientesByFrac = function (id,page, cb) {
 "SELECT Cont.Exp,  Cont.Titular, resultado.FechaPag, V.vencido, IFNULL(C.corriente,0) as corriente\n" +
 "FROM contratos as Cont \n" +
 "JOIN (SELECT pg.codFrac, Max(pg.fechaPag) FechaPag, pg.Exp FROM pagmov as pg \n" +
-"GROUP BY  pg.Exp) as resultado \n" +
+"GROUP BY  pg.Exp LIMIT "+page*30+", 30) as resultado \n" +
 "ON  resultado.Exp = Cont.Exp \n" +
 "\n" +
 " JOIN (SELECT MV.CodFrac, MV.Exp, SUM(MV.SaldoMov) vencido \n" +
 "        FROM movimientos MV\n" +
 "        WHERE MV.CodFrac = "+id.toString()+"\n" +
 "        and cast( MV.FechaV as date) < curdate()\n" +
-"        GROUP BY MV.Exp) as V \n" +
+"        GROUP BY MV.Exp LIMIT "+page*30+", 30) as V \n" +
 "        ON  V.Exp = Cont.Exp\n" +
 "        \n" +
 "left JOIN (SELECT MV.CodFrac, MV.Exp, SUM(MV.SaldoMov) corriente \n" +
 "        FROM movimientos MV\n" +
 "        WHERE MV.CodFrac = "+id.toString()+"\n" +
 "        and cast( MV.FechaV as date) > curdate()\n" +
-"        GROUP BY MV.Exp) as C \n" +
+"        GROUP BY MV.Exp LIMIT "+page*30+", 30) as C \n" +
 "        ON  C.Exp = Cont.Exp\n" +
 "WHERE Cont.CodFrac = "+id.toString()+"\n" +
 "\n" +

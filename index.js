@@ -4,7 +4,7 @@ var express = require('express'),
 var business = require('./business.js');
 
 app.use(function(req, res, next){
-    res.setTimeout(220000, function(){
+    res.setTimeout(200000, function(){
         console.log('Request has timed out.');
             res.send(408);
         });
