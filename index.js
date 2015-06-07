@@ -2,7 +2,11 @@
 var express = require('express'),
     app     = express();
 var business = require('./business.js');
-	
+
+var timeout = require('connect-timeout'); //express v4
+
+app.use(timeout(120000));
+
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/cetys'));
