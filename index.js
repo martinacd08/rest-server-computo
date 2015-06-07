@@ -6,6 +6,11 @@ var business = require('./business.js');
 var timeout = require('connect-timeout'); //express v4
 
 app.use(timeout(120000));
+app.use(haltOnTimedout);
+
+function haltOnTimedout(req, res, next){
+  if (!req.timedout) next();
+}
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
