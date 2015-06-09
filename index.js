@@ -1,13 +1,13 @@
 
 var express = require('express'),
-    app     = express();
+        app = express();
 var business = require('./business.js');
 
-app.use(function(req, res, next){
-    res.setTimeout(500000, function(){
+app.use(function(req, res, next) {
+    res.setTimeout(500000, function() {
         console.log('Request has timed out.');
-            res.send(408);
-        });
+        res.send(408);
+    });
 
     next();
 });
@@ -19,13 +19,13 @@ app.use(express.static(__dirname + '/UI'));
 app.use(express.static(__dirname + '/UI/assets'));
 
 /*
-app.all('*', function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
-*/
+ app.all('*', function(req, res, next) {
+ res.header('Access-Control-Allow-Origin', '*');
+ res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+ res.header('Access-Control-Allow-Headers', 'Content-Type');
+ next();
+ });
+ */
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -37,11 +37,11 @@ var allowCrossDomain = function(req, res, next) {
 app.use(allowCrossDomain);
 
 app.get('/cetys', function(req, res) {
-	res.sendfile(__dirname + '/cetys/portfolio_two.html');
+    res.sendfile(__dirname + '/cetys/portfolio_two.html');
 });
 
 app.get('/', function(req, res) {
-	res.sendfile(__dirname + '/UI/index.html');
+    res.sendfile(__dirname + '/UI/index.html');
 });
 
 
@@ -58,5 +58,5 @@ app.get('/frac/:id/expediente/saldoCorriente', business.getExpSaldoCorrienteByFr
 
 
 app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
+    console.log('Node app is running on port', app.get('port'));
 });
