@@ -536,8 +536,10 @@
           $scope.nextPage = function(){
             
                 if ($scope.objeto.bExp == true) {
-                    console.log($scope.objeto.pagina);
+                    
                     $scope.objeto.pagina++;
+                    $scope.objeto.pagina = $scope.objeto.pagina*30;
+                    console.log($scope.objeto.pagina.toString().length);
                     $scope.getExpediente($scope.objeto.id,$scope.objeto.pagina);
                 }
                 else
