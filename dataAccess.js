@@ -89,13 +89,12 @@ module.exports.getExpedientesByFrac = function(id, page, cb) {
 
             cb(err);
         }
-        page = page *30;
-        var limite = 6 - page.toString().length;
-        var pagina =page+"";
-        for(var x=0; x++ ; x<limite){
-            pagina = "0"+pagina;
+        var pagina =page*30;
+        var limite = 6 - pagina.toString().length;
+        for (i = 0; i < limite; i++) {
+            pagina = "0"+pagina.toString();
         }
-        console.log(pagina);
+        
         conn.query("CALL rigarcia_proyecto.obtener_expedientes('" + id.toString() + "','" + pagina + "');",
                 function(err, rows) {
                     conn.release();
