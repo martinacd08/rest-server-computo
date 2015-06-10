@@ -248,22 +248,22 @@
                                             </tbody>
                                         </table>
                                         <div class="text-right"> 
-                                         <nav>
-                                            <ul class="pagination">
-                                              <li ng-click="previousPage()">
-                                                <a id="previous" href="#" aria-label="Previous">
-                                                  <span aria-hidden="true">&laquo;</span>
-                                                </a>
-                                              </li>
-                                              <li><a href="#">{{objeto.pagina}}</a></li>
-                                              <li ng-click="nextPage()">
-                                                <a id="next" href="#" aria-label="Next">
-                                                  <span aria-hidden="true">&raquo;</span>
-                                                </a>
-                                              </li>
-                                            </ul>
-                                        </nav>
-                                         </div>
+											<nav>
+												<ul class="pagination">
+												  <li ng-click="previousPage()">
+													<a id="previous" href="#" aria-label="Previous">
+													  <span aria-hidden="true">&laquo;</span>
+													</a>
+												  </li>
+												  <li><a href="#">{{objeto.pagina}}</a></li>
+												  <li ng-click="nextPage()">
+													<a id="next" href="#" aria-label="Next">
+													  <span aria-hidden="true">&raquo;</span>
+													</a>
+												  </li>
+												</ul>
+											</nav>
+                                        </div>
                                     </div>
                                     
                                 </div>
@@ -536,21 +536,25 @@
           $scope.nextPage = function(){
             
                 if ($scope.objeto.bExp == true) {
-                    
                     $scope.objeto.pagina++;
-                    
-                    console.log($scope.objeto.pagina.toString().length);
                     $scope.getExpediente($scope.objeto.id,$scope.objeto.pagina);
-                    
-                    
-                    
-                    
                 }
                 else
                 {
                     
                 }
-               
+            };
+            
+            $scope.previousPage = function(){
+            
+                if ($scope.objeto.bExp == true && $scope.objeto.pagina >0 ) {
+                    $scope.objeto.pagina--;
+                    $scope.getExpediente($scope.objeto.id,$scope.objeto.pagina);
+                }
+                else
+                {
+                    
+                }
             };
           
           
