@@ -316,7 +316,7 @@
               
 			  
 			    var socket;
-				socket = io.connect('https://rest-server-computo.herokuapp.com:29692');
+				socket = io.connect('https://rest-server-computo.herokuapp.com');
 				socket.on('updateMov', function (data) {
 					if(data.message) {
 						console.log(data.mensaje);
