@@ -12,6 +12,7 @@ app.use(function(req, res, next) {
     next();
 });
 
+var port = (process.env.PORT || 5000);
 
 app.set('port', (port));
 app.use(express.static(__dirname + '/public'));
