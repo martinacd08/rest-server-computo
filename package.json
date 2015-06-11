@@ -8,7 +8,7 @@
 	
   },
   "dependencies": {
-    "express": "~4.9.x","mysql":"*","connect-timeout":"*"
+    "express": "~4.9.x","mysql":"*","connect-timeout":"*", "socket.io":"*"
   },
   "files": [
     "DAL/",

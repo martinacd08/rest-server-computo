@@ -146,7 +146,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading text-right">
                                     <span ><a href="#" class="btn btn-default" ng-click="calcularFracs()">Calcular</a></span>
-                                    <span style="margin-left:10px;"><button class="btn btn-default" ng-click=""><i class=" fa fa-refresh "></i> Actualizar</button></span>
+                                    <span style="margin-left:10px;"><button class="btn btn-default" id="botonEnviar"  ng-click="enviarMensaje()"><i class=" fa fa-refresh "></i> Actualizar</button></span>
                                 </div> 
                                 <div class="panel-body">
                                     <div class="table-responsive" >
@@ -265,31 +265,12 @@
 											</nav>
                                         </div>
                                     </div>
-                                    
                                 </div>
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
                             </div>
 
                         </div>
                     </div>
-                    <footer><p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p></footer>
+                   
                 </div>
                 <!-- /. PAGE INNER  -->
             </div>
@@ -310,8 +291,21 @@
         <script src="assets/js/custom-scripts.js"></script>
 
         <script src="assets/js/xml2json.min.js"></script>
-
+		
+		<script src="assets/js/socket.io.js"></script>
+		
+		<script>
+		
+			
+		 
+		
+		</script>
         <script>
+		
+		
+		
+		
+		
               $(".frac_table").hide();
               var app = angular.module('index', []).config(function($httpProvider){
               $httpProvider.defaults.useXDomain = true;
@@ -320,6 +314,25 @@
       });
               app.controller('index_ctrl', function($scope, $http) {
               
+			  
+			    var socket;
+				socket = io.connect('https://rest-server-computo.herokuapp.com:3700');
+				socket.on('updateMov', function (data) {
+					if(data.message) {
+						console.log(data.message);
+					} else {
+						console.log("There is a problem:", data);
+					}
+				});
+			  $scope.enviarMensaje=function() {
+					console.log("que pedo");
+					var text = "hola";
+					socket.emit('send', { message: text });
+				};
+			  
+			  
+			  
+			  
               $scope.menu2 = [];
                       var objeto = {id:"0", nombre:"Calcular Fraccionamiento"};
                       $scope.menu2.push(objeto);
@@ -420,48 +433,7 @@
           $scope.menu2[index].saldoRecuperado = obj.saldoRecuperado;
           $scope.menu2[index].bSR = true;
   }
-
-
-
-/*
-  $scope.getObjeto = function(id, nombre) {
-
-          var expRequest = "https://rest-server-computo.herokuapp.com/frac/" + id + "/expedientes";
-          var saldoCorrienteRequest = "https://rest-server-computo.herokuapp.com/frac/" + id + "/saldoCorriente";
-          var saldoRecuperadoRequest = "https://rest-server-computo.herokuapp.com/frac/" + id + "/saldoRecuperado";
-          var saldoVencidoRequest = "https://rest-server-computo.herokuapp.com/frac/" + id + "/saldoVencido";
-          var saldoVencido;
-          var saldoCorriente;
-          var saldoRecuperado;
-          var expedientes;
-          var objeto;
-          $http.get(saldoVencidoRequest)
-          .success(function(response) {saldoVencido = response[0].SaldoVencido;
-                  console.log(1);
-                  $http.get(saldoCorrienteRequest)
-                  .success(function(response1) {saldoCorriente = response1[0].SaldoCorriente;
-                          console.log(2);
-                          $http.get(saldoRecuperadoRequest)
-                          .success(function(response2) {saldoRecuperado = response2[0].SaldoRecuperado;
-                                  console.log(3);
-                                  $http.get(expRequest)
-                                  .success(function(response3) {expedientes = response3;
-                                          console.log(4);
-                                          objeto = {
-                                          id:id,
-                                                  nombre:nombre,
-                                                  expedientes:expedientes,
-                                                  saldoCorriente:saldoCorriente,
-                                                  saldoRecuperado:saldoRecuperado,
-                                                  saldoVencido:saldoVencido
-
-                                          };
-                                  });
-                          });
-                  });
-          });
-          return objeto;
-  };*/
+  
           $scope.getExpediente = function(id,page){
 
           

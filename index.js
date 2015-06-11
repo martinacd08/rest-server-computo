@@ -12,7 +12,9 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.set('port', (process.env.PORT || 5000));
+var port = 3700;
+
+app.set('port', (port));
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/cetys'));
 app.use(express.static(__dirname + '/UI'));
@@ -57,6 +59,15 @@ app.get('/frac/:id/expedientes/:page', business.getExpedientesByFrac);
 app.get('/frac/:id/expediente/saldoCorriente', business.getExpSaldoCorrienteByFrac);
 
 
-app.listen(app.get('port'), function() {
-    console.log('Node app is running on port', app.get('port'));
+var io = require('socket.io').listen(app.listen(port), function() {
+    console.log('Node app is running on port', port);
+});
+
+io.sockets.on('connection', function (socket) {
+    socket.emit('message', { message: 'welcome to the chat' });
+    socket.on('updateMov', function (data) {
+        io.sockets.emit('updateMov', data);
+    });
+	
+	
 });
