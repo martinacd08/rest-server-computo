@@ -12,7 +12,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-var port = 3700;
 
 app.set('port', (port));
 app.use(express.static(__dirname + '/public'));
