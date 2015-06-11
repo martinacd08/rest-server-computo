@@ -42,9 +42,12 @@ app.use(allowCrossDomain);
 app.get('/cetys', function(req, res) {
     res.sendfile(__dirname + '/cetys/portfolio_two.html');
 });
+app.get('/port', function(req, res) {
+    res.send("Node app is running on port"+port);
+});
 
 app.get('/', function(req, res) {
-	console.log('Node app is running on port', port);
+	
     res.sendfile(__dirname + '/UI/index.html');
 });
 
@@ -62,7 +65,7 @@ app.get('/frac/:id/expediente/saldoCorriente', business.getExpSaldoCorrienteByFr
 
 
 var io = require('socket.io').listen(app.listen(port), function() {
-    console.log('Node app is running on port', port);
+    console.log("Node app is running on port"+ port);
 });
 
 io.sockets.on('connection', function (socket) {
