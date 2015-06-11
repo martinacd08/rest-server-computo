@@ -33,63 +33,11 @@
                 </div>
 
                 <ul class="nav navbar-top-links navbar-right">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                            <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    <li class="dropdown" >
+                        <a  href="#" aria-expanded="false" ng-click="toogleColor()">
+                            <i class="fa fa-bell fa-fw"  id="campana"></i> </i>
                         </a>
-                        <ul class="dropdown-menu dropdown-alerts">
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-comment fa-fw"></i> New Comment
-                                        <span class="pull-right text-muted small">4 min</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                        <span class="pull-right text-muted small">12 min</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                        <span class="pull-right text-muted small">4 min</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-tasks fa-fw"></i> New Task
-                                        <span class="pull-right text-muted small">4 min</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                        <span class="pull-right text-muted small">4 min</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a class="text-center" href="#">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </li>
-                        </ul>
+                        
                         <!-- /.dropdown-alerts -->
                     </li>
                     <!-- /.dropdown -->
@@ -103,7 +51,7 @@
                             <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -223,13 +171,13 @@
 
                                                 </tr>
                                             </thead>
-                                            <tbody ng-repeat="x in objeto.expedientes track by $index" id =   {{x.Exp}} >
+                                            <tbody ng-repeat="x in objeto.expedientes track by $index" id ='{{x.Exp}}' >
 
                                                 <tr>
                                                    <!-- <td class="text-center">
                                                         {{$index}}
                                                     </td>  -->
-                                                    <td class="text-center">
+                                                    <td class="text-center" >
                                                         {{x.Exp}}
                                                     </td>
                                                     <td class="text-center">
@@ -319,6 +267,7 @@
 				socket = io.connect('https://rest-server-computo.herokuapp.com');
 				socket.on('updateMov', function (data) {
 					if(data.mensaje) {
+					$("#campana").css({ "color": "white"});
 						$scope.notificacion = data.mensaje;
 						//console.log(data.mensaje.frac);
 						 var objeto = $scope.menu2.filter($scope.buscarObj.bind(this, data.mensaje.frac))[0]
@@ -329,7 +278,7 @@
 						 
 						 var indexRenglon = $scope.menu2[indexObjeto].expedientes.indexOf(renglon);
 						 
-						 
+						 /*
 						 
 						 $scope.menu2[indexObjeto].expedientes[indexRenglon].FechaPag = data.mensaje.fecha;
 						 
@@ -339,12 +288,16 @@
 						 
 						 console.log($scope.menu2[indexObjeto].expedientes[indexRenglon].FechaPag);
 						 console.log($scope.menu2[indexObjeto].expedientes[indexRenglon].vencido);
-						 console.log($scope.menu2[indexObjeto].expedientes[indexRenglon].corriente);
-						 
-						
-						
-					} else {
+						 console.log($scope.menu2[indexObjeto].expedientes[indexRenglon].corriente);*/
+						  $scope.getExpediente(data.mensaje.frac, $scope.objeto.pagina);
+						  console.log(data.mensaje.expediente)
+							$("#"+data.mensaje.expediente+" td").css({ "background-color": "#dff0d8"});
+							
+							
+							}
+					else {
 					}
+					
 				});
 			  $scope.enviarMensaje=function() {
 					/*console.log("que pedo");
@@ -356,7 +309,9 @@
 				
 				}
 			  
-			  
+			  $scope.toogleColor = function(){
+				$("#campana").css({ "color": "#77C0FD"});
+			  }
 			  
 			  
               $scope.menu2 = [];
