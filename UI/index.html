@@ -223,7 +223,7 @@
 
                                                 </tr>
                                             </thead>
-                                            <tbody ng-repeat="x in objeto.expedientes track by $index">
+                                            <tbody ng-repeat="x in objeto.expedientes track by $index" id =   {{x.Exp}} >
 
                                                 <tr>
                                                    <!-- <td class="text-center">
@@ -251,13 +251,13 @@
 											<nav>
 												<ul class="pagination">
 												  <li ng-click="previousPage()">
-													<a id="previous" href="#" aria-label="Previous">
+													<a id="previous"  aria-label="Previous">
 													  <span aria-hidden="true">&laquo;</span>
 													</a>
 												  </li>
 												  <li><a href="#">{{objeto.pagina}}</a></li>
 												  <li ng-click="nextPage()">
-													<a id="next" href="#" aria-label="Next">
+													<a id="next" aria-label="Next">
 													  <span aria-hidden="true">&raquo;</span>
 													</a>
 												  </li>
@@ -314,14 +314,36 @@
       });
               app.controller('index_ctrl', function($scope, $http) {
               
-			  
+				$scope.objetoNoti={};
 			    var socket;
 				socket = io.connect('https://rest-server-computo.herokuapp.com');
 				socket.on('updateMov', function (data) {
-					if(data.message) {
-						console.log(data.mensaje);
+					if(data.mensaje) {
+						$scope.notificacion = data.mensaje;
+						//console.log(data.mensaje.frac);
+						 var objeto = $scope.menu2.filter($scope.buscarObj.bind(this, data.mensaje.frac))[0]
+						 
+						 var indexObjeto = $scope.menu2.indexOf(objeto);
+						
+						 var renglon = objeto.expedientes.filter($scope.buscarRenglon.bind(this, $scope.notificacion.expediente))[0]
+						 
+						 var indexRenglon = $scope.menu2[indexObjeto].expedientes.indexOf(renglon);
+						 
+						 
+						 
+						 $scope.menu2[indexObjeto].expedientes[indexRenglon].FechaPag = data.mensaje.fecha;
+						 
+						 $scope.menu2[indexObjeto].expedientes[indexRenglon].vencido = data.mensaje.saldoVencido;
+						 
+						 $scope.menu2[indexObjeto].expedientes[indexRenglon].corriente = data.mensaje.saldoCorriente;
+						 
+						 console.log($scope.menu2[indexObjeto].expedientes[indexRenglon].FechaPag);
+						 console.log($scope.menu2[indexObjeto].expedientes[indexRenglon].vencido);
+						 console.log($scope.menu2[indexObjeto].expedientes[indexRenglon].corriente);
+						 
+						
+						
 					} else {
-						console.log("There is a problem:", data);
 					}
 				});
 			  $scope.enviarMensaje=function() {
@@ -329,6 +351,10 @@
 					var text = "hola";
 					socket.emit('send', { message: text });*/
 				};
+				
+				$scope.notificacion = function(){
+				
+				}
 			  
 			  
 			  
@@ -392,6 +418,10 @@
                       };
                       $scope.buscarObj = function(id, element) {
                       return element.id === id;
+                      }
+					  
+					  $scope.buscarRenglon = function(exp, element) {
+                      return element.Exp === exp;
                       }
 
 
