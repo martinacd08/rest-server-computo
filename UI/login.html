@@ -90,7 +90,7 @@
    function login(){
    var email = $("#userTxt").val();
    var pass = $("#passTxt").val();
-	$.post("https://rest-server-computo.herokuapp.com//login",{email:email,pass:pass},function(data){        
+	$.post("https://rest-server-computo.herokuapp.com/login",{email:email,pass:pass},function(data){        
             if(data==='ok')           
             {
                 window.location.href="/admin";
