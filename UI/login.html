@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head>
+      <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Bootstrap Admin Template : Dream</title>
+	<!-- Bootstrap Styles-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+     <!-- FontAwesome Styles-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet">
+        <!-- Custom Styles-->
+    <link href="assets/css/custom-styles.css" rel="stylesheet">
+     <!-- Google Fonts-->
+   <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="wrapper">
+        
+        <!--/. NAV TOP  -->
+        
+       
+        <div id="page-wrapper">
+            <div id="page-inner">
+			 <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">Login
+                        </h1>
+                    </div>
+                </div> 
+                 <!-- /. ROW  -->
+              <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                <div class="col-lg-4">
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    <form role="form">
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon">@</span>
+                                            <input type="text" class="form-control" placeholder="Usuario"id="userTxt">
+                                        </div>
+                                        
+                                        
+                                        
+                                        <div class="form-group input-group">
+                                            <input type="password" class="form-control" placeholder="Contraseña" id="passTxt">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button" onclick="login()"><i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+			
+			</div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script src="assets/js/jquery-1.10.2.js"></script>
+      <!-- Bootstrap Js -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="assets/js/jquery.metisMenu.js"></script>
+      <!-- Custom Js -->
+    <script src="assets/js/custom-scripts.js"></script>
+    
+   <script>
+   function login(){
+   var email = $("#userTxt").val();
+   var pass = $("#passTxt").val();
+	$.post("http://localhost:5000/login",{email:email,pass:pass},function(data){        
+            if(data==='ok')           
+            {
+                window.location.href="/admin";
+            }
+			else
+			{
+			
+				alert("Usuario o contraseña incorrectos     " +data)
+			}
+        });
+	}
+   </script>
+
+
+</body></html>

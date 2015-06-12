@@ -3,14 +3,15 @@ var express = require('express'),
         app = express();
 var business = require('./business.js');
 
-app.use(function(req, res, next) {
-    res.setTimeout(500000, function() {
-        console.log('Request has timed out.');
-        res.send(408);
-    });
 
-    next();
-});
+var session = require('express-session');
+var bodyParser = require('body-parser');
+
+
+app.use(session({secret: 'ssshhhhh'}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 
 var port = (process.env.PORT || 5000);
 
@@ -21,14 +22,6 @@ app.use(express.static(__dirname + '/cetys'));
 app.use(express.static(__dirname + '/UI'));
 app.use(express.static(__dirname + '/UI/assets'));
 
-/*
- app.all('*', function(req, res, next) {
- res.header('Access-Control-Allow-Origin', '*');
- res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
- res.header('Access-Control-Allow-Headers', 'Content-Type');
- next();
- });
- */
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -39,16 +32,97 @@ var allowCrossDomain = function(req, res, next) {
 }
 app.use(allowCrossDomain);
 
-app.get('/cetys', function(req, res) {
-    res.sendfile(__dirname + '/cetys/portfolio_two.html');
-});
-app.get('/port', function(req, res) {
-    res.send("Node app is running on port"+port);
+
+
+var sess = null;
+
+
+app.get('/',function(req,res){
+	res.sendFile(__dirname + '/UI/login.html');
 });
 
-app.get('/', function(req, res) {
+app.post('/login',function(req,res){
 	
-    res.sendfile(__dirname + '/UI/index.html');
+	if(req.body.pass == 'pass' & req.body.email== 'user'){
+		sess=req.body;
+		res.end("ok")
+		
+	}
+	else
+	{
+		res.end("Error")
+	}
+});
+
+app.get('/admin',function(req,res){
+
+		if(sess !=null)
+		{
+			res.sendFile(__dirname + '/UI/admin.html');
+		}
+		else
+		{
+		
+			res.redirect('/');
+		}
+
+
+});
+
+app.get('/logout',function(req,res){
+	sess = null;
+	req.session.destroy(function(err){
+		if(err){
+			console.log(err);
+		}
+		else
+		{
+			res.redirect('/');
+		}
+	});
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.get('/cetys', function(req, res) {
+    
+	
+	if(sess !=null)
+		{
+			res.sendFile(__dirname + '/cetys/portfolio_two.html');
+		}
+		else
+		{
+		
+			res.redirect('/');
+		}
+});
+
+
+app.get('/admin', function(req, res) {
+	
+    
+	if(sess !=null)
+		{
+			res.sendFile(__dirname + '/UI/admin.html');
+		}
+		else
+		{
+		
+			res.redirect('/');
+		}
 });
 
 
