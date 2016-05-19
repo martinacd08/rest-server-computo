@@ -22,15 +22,7 @@
         <div id="wrapper" ng-app="index" ng-controller="index_ctrl">
             <nav class="navbar navbar-default top-navbar" role="navigation">
 
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html">Camachosoft</a>
-                </div>
+                
 
                 <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown" >
@@ -56,70 +48,21 @@
                 </ul>
             </nav>
             <!--/. NAV TOP  -->
-            <nav class="navbar-default navbar-side" role="navigation"  >
-                <div class="sidebar-collapse" >
-                    <ul class="nav"  id="main-menu" ng-repeat="x in menu2"  >
-
-                        <li id={{x.id}} name= {{x.nombre}} ng-click="toggleTables($event)">
-                            <a class="active-menu"  href="#"><i class="fa fa-dashboard"></i> {{x.nombre}}</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            
             <!-- /. NAV SIDE  -->
             <div id="page-wrapper">
                 <div id="page-inner">
 
                     <!-- /. ROW  -->
                     <div class="row all_fracs_table" >
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+
                         <div class="col-md-12 col-sm-12 col-xs-12" >
                             <div class="panel panel-default">
                                 <div class="panel-heading text-right">
                                     <span ><a href="#" class="btn btn-default" ng-click="calcularFracs()">Calcular</a></span>
                                     <span style="margin-left:10px;"><button class="btn btn-default" id="botonEnviar"  ng-click="enviarMensaje()"><i class=" fa fa-refresh "></i> Actualizar</button></span>
                                 </div> 
-                                <div class="panel-body">
-                                    <div class="table-responsive" >
-                                        <table class="table table-striped table-bordered table-hover" id="tablaFraccs">
-                                            <thead>
-                                                <tr >  
-                                                    <th class="text-center">#</th>
-                                                    <th style="text-align:center;">Fraccionamiento</th>
-                                                    <th class="text-center">Acción</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody ng-repeat="x in nombres track by $index">
-
-                                                <tr>
-                                                    <td class="text-center">
-                                                        {{$index}}
-                                                    </td>
-                                                    <td class="text-left">
-                                                        {{x.Nombre}}
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <input type="checkbox" class="custom-checkbox" id={{x.CodFrac}} name={{x.Nombre}} ng-click="calcularFracs()">
-                                                            <label for={{x.CodFrac}}></label>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                              
                             </div>
 
                         </div>
@@ -127,92 +70,7 @@
                     <!-- /. ROW  -->
 
 
-                    <div class="row frac_table" >
-                        <div class="row ">
-                            <div class="col-md-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                         Fraccionamiento: {{nombre}}
-                                        
-                                    </div>        
-                                    <div class="panel-body"> 
-                                        <div class="alert alert-success col-md-4">
-                                            <strong>Saldo Corriente: </strong> ${{objeto.saldoCorriente}}
-                                        </div>
-                                        <div class="alert alert-danger col-md-4">
-                                            <strong>Saldo Vencido: </strong>${{objeto.saldoVencido}}
-                                        </div>
-                                        <div class="alert alert-info col-md-4">
-                                            <strong>Saldo Recuperado: </strong> ${{objeto.saldoRecuperado}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>						
-                        </div>
-
-                        <div class="col-md-12 col-sm-12 col-xs-12" >
-                            <div class="panel panel-default">
-
-                                <div class="panel-body">
-                                    <div class="table-responsive" >
-                                        <table class="table table-striped table-bordered table-hover" id="tablaFraccs">
-                                            <thead>
-                                                <tr >  
-                                                   <!-- <th class="text-center">#</th> -->
-                                                    <th style="text-align:center;">Expediente</th>
-                                                    <th class="text-center">Cliente</th>
-                                                    <th class="text-center">Último Abono</th>
-                                                    <th class="text-center">Saldo Corriente</th>
-                                                    <th class="text-center">Saldo Vencido</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody ng-repeat="x in objeto.expedientes track by $index" id ='{{x.Exp}}' >
-
-                                                <tr>
-                                                   <!-- <td class="text-center">
-                                                        {{$index}}
-                                                    </td>  -->
-                                                    <td class="text-center" >
-                                                        {{x.Exp}}
-                                                    </td>
-                                                    <td class="text-center">
-                                                        {{x.Titular}}
-                                                    </td>
-                                                    <td class="text-center">
-                                                        {{x.FechaPag}}
-                                                    </td>
-                                                    <td class="text-center">
-                                                        {{x.corriente}}
-                                                    </td>
-                                                    <td class="text-center">
-                                                        {{x.vencido}}
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <div class="text-right"> 
-											<nav>
-												<ul class="pagination">
-												  <li ng-click="previousPage()">
-													<a id="previous"  aria-label="Previous">
-													  <span aria-hidden="true">&laquo;</span>
-													</a>
-												  </li>
-												  <li><a href="#">{{objeto.pagina}}</a></li>
-												  <li ng-click="nextPage()">
-													<a id="next" aria-label="Next">
-													  <span aria-hidden="true">&raquo;</span>
-													</a>
-												  </li>
-												</ul>
-											</nav>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                 
                     </div>
                    
                 </div>
