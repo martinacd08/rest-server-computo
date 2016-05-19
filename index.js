@@ -55,20 +55,7 @@ app.post('/login',function(req,res){
 	}
 });
 
-app.get('/admin',function(req,res){
 
-		if(sess !=null)
-		{
-			res.sendFile(__dirname + '/UI/admin.html');
-		}
-		else
-		{
-		
-			res.redirect('/');
-		}
-
-
-});
 
 app.get('/logout',function(req,res){
 	sess = null;
@@ -93,40 +80,6 @@ app.get('/logout',function(req,res){
 
 
 
-
-
-
-
-app.get('/cetys', function(req, res) {
-    
-	
-	if(sess !=null)
-		{
-			res.sendFile(__dirname + '/cetys/portfolio_two.html');
-		}
-		else
-		{
-		
-			res.redirect('/');
-		}
-});
-
-n
-app.get('/admin', function(req, res) {
-	
-    
-	if(sess !=null)
-		{
-			res.sendFile(__dirname + '/UI/admin.html');
-		}
-		else
-		{
-		
-			res.redirect('/');
-		}
-});
-
-
 app.get('/notificaciones', function(req, res) {
 	
     
@@ -142,16 +95,7 @@ app.get('/notificaciones', function(req, res) {
 });
 
 
-app.get('/fracs', business.getAllFracs);
-app.get('/frac/:id', business.getFracByID);
-app.get('/frac/:id/saldoCorriente', business.getSaldoCorrienteByFrac);
-app.get('/frac/:id/saldoVencido', business.getSaldoVencidoByFrac);
 
-app.get('/frac/:id/saldoRecuperado', business.getSaldoRecuperadoByFrac);
-
-app.get('/frac/:id/expedientes/:page', business.getExpedientesByFrac);
-
-app.get('/frac/:id/expediente/saldoCorriente', business.getExpSaldoCorrienteByFrac);
 
 
 var io = require('socket.io').listen(app.listen(port), function() {
