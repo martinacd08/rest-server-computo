@@ -1,0 +1,529 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Proyecto Final Martin Camacho</title>
+        <!-- Bootstrap Styles-->
+        <link href="assets/css/bootstrap.css" rel="stylesheet" />
+        <!-- FontAwesome Styles-->
+        <link href="assets/css/font-awesome.css" rel="stylesheet" />
+        <!-- Morris Chart Styles-->
+        <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+        <!-- Custom Styles-->
+        <link href="assets/css/custom-styles.css" rel="stylesheet" />
+        <!-- Google Fonts-->
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+        <script src="assets/js/angular.min.js"></script>
+    </head>
+
+    <body>
+        <div id="wrapper" ng-app="index" ng-controller="index_ctrl">
+            <nav class="navbar navbar-default top-navbar" role="navigation">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">Camachosoft</a>
+                </div>
+
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown" >
+                        <a  href="#" aria-expanded="false" ng-click="toogleColor()">
+                            <i class="fa fa-bell fa-fw"  id="campana"></i> </i>
+                        </a>
+                        
+                        <!-- /.dropdown-alerts -->
+                    </li>
+                    <!-- /.dropdown -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                            <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                           
+                            <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                    <!-- /.dropdown -->
+                </ul>
+            </nav>
+            <!--/. NAV TOP  -->
+            <nav class="navbar-default navbar-side" role="navigation"  >
+                <div class="sidebar-collapse" >
+                    <ul class="nav"  id="main-menu" ng-repeat="x in menu2"  >
+
+                        <li id={{x.id}} name= {{x.nombre}} ng-click="toggleTables($event)">
+                            <a class="active-menu"  href="#"><i class="fa fa-dashboard"></i> {{x.nombre}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- /. NAV SIDE  -->
+            <div id="page-wrapper">
+                <div id="page-inner">
+
+                    <!-- /. ROW  -->
+                    <div class="row all_fracs_table" >
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <div class="col-md-12 col-sm-12 col-xs-12" >
+                            <div class="panel panel-default">
+                                <div class="panel-heading text-right">
+                                    <span ><a href="#" class="btn btn-default" ng-click="calcularFracs()">Calcular</a></span>
+                                    <span style="margin-left:10px;"><button class="btn btn-default" id="botonEnviar"  ng-click="enviarMensaje()"><i class=" fa fa-refresh "></i> Actualizar</button></span>
+                                </div> 
+                                <div class="panel-body">
+                                    <div class="table-responsive" >
+                                        <table class="table table-striped table-bordered table-hover" id="tablaFraccs">
+                                            <thead>
+                                                <tr >  
+                                                    <th class="text-center">#</th>
+                                                    <th style="text-align:center;">Fraccionamiento</th>
+                                                    <th class="text-center">Acción</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-repeat="x in nombres track by $index">
+
+                                                <tr>
+                                                    <td class="text-center">
+                                                        {{$index}}
+                                                    </td>
+                                                    <td class="text-left">
+                                                        {{x.Nombre}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="checkbox" class="custom-checkbox" id={{x.CodFrac}} name={{x.Nombre}} ng-click="calcularFracs()">
+                                                            <label for={{x.CodFrac}}></label>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /. ROW  -->
+
+
+                    <div class="row frac_table" >
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                         Fraccionamiento: {{nombre}}
+                                        
+                                    </div>        
+                                    <div class="panel-body"> 
+                                        <div class="alert alert-success col-md-4">
+                                            <strong>Saldo Corriente: </strong> ${{objeto.saldoCorriente}}
+                                        </div>
+                                        <div class="alert alert-danger col-md-4">
+                                            <strong>Saldo Vencido: </strong>${{objeto.saldoVencido}}
+                                        </div>
+                                        <div class="alert alert-info col-md-4">
+                                            <strong>Saldo Recuperado: </strong> ${{objeto.saldoRecuperado}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>						
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12" >
+                            <div class="panel panel-default">
+
+                                <div class="panel-body">
+                                    <div class="table-responsive" >
+                                        <table class="table table-striped table-bordered table-hover" id="tablaFraccs">
+                                            <thead>
+                                                <tr >  
+                                                   <!-- <th class="text-center">#</th> -->
+                                                    <th style="text-align:center;">Expediente</th>
+                                                    <th class="text-center">Cliente</th>
+                                                    <th class="text-center">Último Abono</th>
+                                                    <th class="text-center">Saldo Corriente</th>
+                                                    <th class="text-center">Saldo Vencido</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-repeat="x in objeto.expedientes track by $index" id ='{{x.Exp}}' >
+
+                                                <tr>
+                                                   <!-- <td class="text-center">
+                                                        {{$index}}
+                                                    </td>  -->
+                                                    <td class="text-center" >
+                                                        {{x.Exp}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{x.Titular}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{x.FechaPag}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{x.corriente}}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{x.vencido}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-right"> 
+											<nav>
+												<ul class="pagination">
+												  <li ng-click="previousPage()">
+													<a id="previous"  aria-label="Previous">
+													  <span aria-hidden="true">&laquo;</span>
+													</a>
+												  </li>
+												  <li><a href="#">{{objeto.pagina}}</a></li>
+												  <li ng-click="nextPage()">
+													<a id="next" aria-label="Next">
+													  <span aria-hidden="true">&raquo;</span>
+													</a>
+												  </li>
+												</ul>
+											</nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                   
+                </div>
+                <!-- /. PAGE INNER  -->
+            </div>
+            <!-- /. PAGE WRAPPER  -->
+        </div>
+        <!-- /. WRAPPER  -->
+        <!-- JS Scripts-->
+        <!-- jQuery Js -->
+        <script src="assets/js/jquery-1.10.2.js"></script>
+        <!-- Bootstrap Js -->
+        <script src="assets/js/bootstrap.min.js"></script>
+        <!-- Metis Menu Js -->
+        <script src="assets/js/jquery.metisMenu.js"></script>
+        <!-- Morris Chart Js -->
+        <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
+        <script src="assets/js/morris/morris.js"></script>
+        <!-- Custom Js -->
+        <script src="assets/js/custom-scripts.js"></script>
+
+        <script src="assets/js/xml2json.min.js"></script>
+		
+		<script src="assets/js/socket.io.js"></script>
+		
+		<script>
+		
+			
+		 
+		
+		</script>
+        <script>
+		
+		
+		
+		
+		
+              $(".frac_table").hide();
+              var app = angular.module('index', []).config(function($httpProvider){
+              $httpProvider.defaults.useXDomain = true;
+              delete $httpProvider.defaults.headers.common['X-Requested-With'];
+              $httpProvider.defaults.timeout = 500000;
+      });
+              app.controller('index_ctrl', function($scope, $http) {
+              
+				$scope.objetoNoti={};
+			    var socket;
+				socket = io.connect('https://rest-server-computo.herokuapp.com');
+				socket.on('updateMov', function (data) {
+					if(data.mensaje) {
+					$("#campana").css({ "color": "white"});
+						$scope.notificacion = data.mensaje;
+						//console.log(data.mensaje.frac);
+						 var objeto = $scope.menu2.filter($scope.buscarObj.bind(this, data.mensaje.frac))[0]
+						 
+						 var indexObjeto = $scope.menu2.indexOf(objeto);
+						
+						 var renglon = objeto.expedientes.filter($scope.buscarRenglon.bind(this, $scope.notificacion.expediente))[0]
+						 
+						 var indexRenglon = $scope.menu2[indexObjeto].expedientes.indexOf(renglon);
+						 
+						 /*
+						 
+						 $scope.menu2[indexObjeto].expedientes[indexRenglon].FechaPag = data.mensaje.fecha;
+						 
+						 $scope.menu2[indexObjeto].expedientes[indexRenglon].vencido = data.mensaje.saldoVencido;
+						 
+						 $scope.menu2[indexObjeto].expedientes[indexRenglon].corriente = data.mensaje.saldoCorriente;
+						 
+						 console.log($scope.menu2[indexObjeto].expedientes[indexRenglon].FechaPag);
+						 console.log($scope.menu2[indexObjeto].expedientes[indexRenglon].vencido);
+						 console.log($scope.menu2[indexObjeto].expedientes[indexRenglon].corriente);*/
+						  $scope.getExpediente(data.mensaje.frac, $scope.objeto.pagina);
+						  console.log(data.mensaje.expediente)
+							$("#"+data.mensaje.expediente+" td").css({ "background-color": "#dff0d8"});
+							
+							
+							}
+					else {
+					}
+					
+				});
+			  $scope.enviarMensaje=function() {
+					/*console.log("que pedo");
+					var text = "hola";
+					socket.emit('send', { message: text });*/
+				};
+				
+				$scope.notificacion = function(){
+				
+				}
+			  
+			  $scope.toogleColor = function(){
+				$("#campana").css({ "color": "#77C0FD"});
+				
+			  }
+			  
+			  
+              $scope.menu2 = [];
+                      var objeto = {id:"0", nombre:"Calcular Fraccionamiento"};
+                      $scope.menu2.push(objeto);
+                      $scope.calcularFracs = function(){
+
+                      $('input:checked').each(function()
+                      {
+                        if ($scope.menu2.filter($scope.buscarObj.bind(this, $(this).attr('id')))[0] == undefined){
+                              var objeto = {
+                              id:$(this).attr('id'),
+                                      nombre:$(this).attr('name'),
+                                      expedientes:[],
+                                      saldoCorriente:"0",
+                                      saldoRecuperado:"0",
+                                      saldoVencido:"0",
+                                      bExp:false,
+                                      bSC:false,
+                                      bSR:false,
+                                      bSV:false,
+                                      pagina:0
+                                };
+                                $scope.menu2.push(objeto);
+                        }                                                     
+                    });
+                              angular.forEach($scope.menu2, function(item) {
+
+                              if (item.id != "0")
+                              {
+                              var obj = $scope.menu2.filter($scope.buscarObj.bind(this, item.id))[0]
+
+                                      console.log(obj.bExp + " " + obj.bSC + " " + obj.bSV + " " + obj.bSR);
+                                      if (obj.bExp == false){$scope.getExpediente(item.id,"0"); }
+
+                              if (obj.bSV == false){$scope.getSaldoVencido(item.id); }
+
+                              if (obj.bSC == false){$scope.getSaldoCorriente(item.id); }
+
+                              if (obj.bSR == false){$scope.getSaldoRecuperado(item.id); }
+
+                              }
+                              });
+                   };
+                      $scope.toggleTables = function($event){
+                      $scope.id = $event.currentTarget.id;
+                              $scope.nombre = $("#" + $scope.id).attr("name");
+                              if ($event.currentTarget.id != 0){
+                      $(".frac_table").show();
+                              $(".all_fracs_table").hide();
+                              $scope.objeto = $scope.menu2.filter($scope.buscarObj.bind(this, $scope.id))[0]
+
+                      }
+                      else{
+                      $(".frac_table").hide();
+                              $(".all_fracs_table").show();
+                      }
+
+                      };
+                      $scope.buscarObj = function(id, element) {
+                      return element.id === id;
+                      }
+					  
+					  $scope.buscarRenglon = function(exp, element) {
+                      return element.Exp === exp;
+                      }
+
+
+              $scope.updateExp = function (obj, element) {
+              var objeto = $scope.menu2.filter($scope.buscarObj.bind(this, obj.id))[0]
+                      var index = $scope.menu2.indexOf(objeto);
+                      $scope.menu2[index].expedientes = obj.exp;
+                      $scope.menu2[index].bExp = true;
+              }
+
+
+              $scope.updateSaldoVencido = function (obj, element) {
+              var objeto = $scope.menu2.filter($scope.buscarObj.bind(this, obj.id))[0]
+                      var index = $scope.menu2.indexOf(objeto);
+                      if (obj.saldoVencido == null)
+                      obj.saldoVencido = "0";
+                      $scope.menu2[index].saldoVencido = obj.saldoVencido;
+                      $scope.menu2[index].bSV = true;
+              }
+
+              $scope.updateSaldoCorriente = function (obj, element) {
+              var objeto = $scope.menu2.filter($scope.buscarObj.bind(this, obj.id))[0]
+
+
+                      var index = $scope.menu2.indexOf(objeto);
+                      if (obj.saldoCorriente == null)
+                      obj.saldoCorriente = "0";
+                      $scope.menu2[index].saldoCorriente = obj.saldoCorriente;
+                      $scope.menu2[index].bSC = true;
+              }
+
+              $scope.updateSaldoRecuperado = function (obj, element) {
+              var objeto = $scope.menu2.filter($scope.buscarObj.bind(this, obj.id))[0]
+
+
+                      var index = $scope.menu2.indexOf(objeto);
+                      if (obj.saldoRecuperado == null)
+                      obj.saldoRecuperado = "0";
+          $scope.menu2[index].saldoRecuperado = obj.saldoRecuperado;
+          $scope.menu2[index].bSR = true;
+  }
+  
+          $scope.getExpediente = function(id,page){
+
+          
+          if ($scope.objeto != undefined) {
+            $scope.objeto.bExp =false;
+          }
+          
+
+          var Request = "https://rest-server-computo.herokuapp.com/frac/" + id + "/expedientes/"+ page ;
+                  $http.get(Request)
+                  .success(
+                          function(response3) {
+                          $scope.menu2.filter($scope.updateExp.bind(this, {id:id, exp:response3[0]}));
+                                  console.log(id);
+                          })
+                  .error(
+                          function(response3) {
+                          $scope.getExpediente(id,page);
+                          });
+          };
+          $scope.getSaldoVencido = function(id){
+          var Request = "https://rest-server-computo.herokuapp.com/frac/" + id + "/saldoVencido";
+                  $http.get(Request)
+                  .success(
+                          function(response) {
+                          $scope.menu2.filter($scope.updateSaldoVencido.bind(this, {id:id, saldoVencido:response[0].SaldoVencido}));
+                          })
+                  .error(
+                          function(response3) {
+                          $scope.getSaldoVencido(id);
+                          });
+          };
+          $scope.getSaldoCorriente = function(id){
+          var Request = "https://rest-server-computo.herokuapp.com/frac/" + id + "/saldoCorriente";
+                  $http.get(Request).success(function(response) {
+
+          $scope.menu2.filter($scope.updateSaldoCorriente.bind(this, {id:id, saldoCorriente:response[0].SaldoCorriente}));
+          }).error(
+                  function(response3) {
+                  $scope.getSaldoCorriente(id);
+                  });
+          };
+          $scope.getSaldoRecuperado = function(id){
+          var Request = "https://rest-server-computo.herokuapp.com/frac/" + id + "/saldoRecuperado";
+                  $http.get(Request).success(function(response) {
+
+          $scope.menu2.filter($scope.updateSaldoRecuperado.bind(this, {id:id, saldoRecuperado:response[0].SaldoRecuperado}));
+          }).error(
+                  function(response3) {
+                  $scope.getSaldoRecuperado(id);
+                  });
+          };
+          $scope.getAllFracs = function(){
+
+          $http.get("https://rest-server-computo.herokuapp.com/fracs")
+                  .success(function(response) {$scope.nombres = response; });
+                  /*
+                   $http.get("http://soapjaxws.herokuapp.com/HelloService/pagar", {params: { arg0: 01200000000000699 }})
+                   .success(function(response) {
+                   var xmlText = response;
+                   var x2js = new X2JS();
+                   var jsonObj = x2js.xml_str2json( xmlText );
+                   console.log(jsonObj.Envelope.Body.pagarResponse.return);
+                   
+                   })
+                   .error(function(response) {console.log(response); });
+                   */
+
+          };
+          $scope.getAllFracs();
+          
+          $scope.nextPage = function(){
+            
+                if ($scope.objeto.bExp == true) {
+                    $scope.objeto.pagina++;
+                    $scope.getExpediente($scope.objeto.id,$scope.objeto.pagina);
+                }
+                else
+                {
+                    
+                }
+            };
+            
+            $scope.previousPage = function(){
+            
+                if ($scope.objeto.bExp == true && $scope.objeto.pagina >0 ) {
+                    $scope.objeto.pagina--;
+                    $scope.getExpediente($scope.objeto.id,$scope.objeto.pagina);
+                }
+                else
+                {
+                    
+                }
+            };
+          
+          
+          
+          
+          
+          
+          
+          
+          
+  });
+
+        </script>
+
+
+    </body>
+
+</html>
