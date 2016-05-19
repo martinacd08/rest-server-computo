@@ -127,12 +127,12 @@ app.get('/admin', function(req, res) {
 });
 
 
-app.get('/otificaciones', function(req, res) {
+app.get('/notificaciones', function(req, res) {
 	
     
 	if(sess !=null)
 		{
-			res.sendFile(__dirname + '/UI/otificaciones_admin_sarai.html');
+			res.sendFile(__dirname + '/UI/notificaciones_admin_sarai.html');
 		}
 		else
 		{
@@ -159,9 +159,13 @@ var io = require('socket.io').listen(app.listen(port), function() {
 });
 
 io.sockets.on('connection', function (socket) {
-    socket.emit('message', { message: 'welcome to the chat' });
-    socket.on('updateMov', function (data) {
-        io.sockets.emit('updateMov', data);
+   
+    socket.on('darComida', function (data) {
+        io.sockets.emit('darComida', data);
+    });
+
+    socket.on('darCafe', function (data) {
+        io.sockets.emit('darCafe', data);
     });
 	
 	
