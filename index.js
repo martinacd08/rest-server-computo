@@ -111,13 +111,28 @@ app.get('/cetys', function(req, res) {
 		}
 });
 
-
+n
 app.get('/admin', function(req, res) {
 	
     
 	if(sess !=null)
 		{
 			res.sendFile(__dirname + '/UI/admin.html');
+		}
+		else
+		{
+		
+			res.redirect('/');
+		}
+});
+
+
+app.get('/otificaciones', function(req, res) {
+	
+    
+	if(sess !=null)
+		{
+			res.sendFile(__dirname + '/UI/otificaciones_admin_sarai.html');
 		}
 		else
 		{
