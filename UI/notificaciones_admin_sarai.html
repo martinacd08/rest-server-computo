@@ -261,38 +261,15 @@
 				$scope.objetoNoti={};
 			    var socket;
 				socket = io.connect('https://rest-server-computo.herokuapp.com');
-				socket.on('updateMov', function (data) {
-					if(data.mensaje) {
-					$("#campana").css({ "color": "white"});
-						$scope.notificacion = data.mensaje;
-						//console.log(data.mensaje.frac);
-						 var objeto = $scope.menu2.filter($scope.buscarObj.bind(this, data.mensaje.frac))[0]
-						 
-						 var indexObjeto = $scope.menu2.indexOf(objeto);
-						
-						 var renglon = objeto.expedientes.filter($scope.buscarRenglon.bind(this, $scope.notificacion.expediente))[0]
-						 
-						 var indexRenglon = $scope.menu2[indexObjeto].expedientes.indexOf(renglon);
-						 
-						 /*
-						 
-						 $scope.menu2[indexObjeto].expedientes[indexRenglon].FechaPag = data.mensaje.fecha;
-						 
-						 $scope.menu2[indexObjeto].expedientes[indexRenglon].vencido = data.mensaje.saldoVencido;
-						 
-						 $scope.menu2[indexObjeto].expedientes[indexRenglon].corriente = data.mensaje.saldoCorriente;
-						 
-						 console.log($scope.menu2[indexObjeto].expedientes[indexRenglon].FechaPag);
-						 console.log($scope.menu2[indexObjeto].expedientes[indexRenglon].vencido);
-						 console.log($scope.menu2[indexObjeto].expedientes[indexRenglon].corriente);*/
-						  $scope.getExpediente(data.mensaje.frac, $scope.objeto.pagina);
-						  console.log(data.mensaje.expediente)
-							$("#"+data.mensaje.expediente+" td").css({ "background-color": "#dff0d8"});
-							
-							
-							}
-					else {
+				socket.on('darComida', function (data) {
+                    console.log("dar comida");
+					if(data.mensaje) 
+                    {
+					   $("#campana").css({ "color": "white"});
+					   $scope.notificacion = data.mensaje;
+					   var objeto = $scope.menu2.filter($scope.buscarObj.bind(this, data.mensaje.frac))[0]
 					}
+					
 					
 				});
 			  $scope.enviarMensaje=function() {
